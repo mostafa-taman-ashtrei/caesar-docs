@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Owl",
-  description: "Chat with your documents using the power of AI",
+  title: "Raven",
+  description: "Chat with and manage your documents using the power of A.I",
 };
 
 interface RootLayoutProps {
@@ -22,7 +22,12 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <TrpcProvider>
-        <body className={cn("grainy min-h-screen font-sans antialiased", inter.className)}>
+        <body
+          className={cn(
+            "grainy min-h-screen font-sans antialiased",
+            inter.className
+          )}
+        >
           <NextThemeProvider>
             <Navbar />
             {children}

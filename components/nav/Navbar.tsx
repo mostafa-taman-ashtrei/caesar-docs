@@ -12,7 +12,7 @@ import React from "react";
 import ThemeTogglerButton from "./ThemeToggle";
 import { buttonVariants } from "../ui/button";
 
-interface NavbarProps {}
+interface NavbarProps { }
 
 const Navbar: React.FC<NavbarProps> = async () => {
   const { getUser } = getKindeServerSession();
@@ -23,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = async () => {
       <div className="px-7">
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="z-40 flex font-semibold">
-            <span>OWL</span>
+            <span>RAVEN</span>
           </Link>
 
           <MobileNav isAuth={!!user} />
