@@ -1,8 +1,8 @@
 "use client";
 
+import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import { Menu, XIcon } from "lucide-react";
 
-import Link from "next/link";
 import NavLink from "./NavLink";
 import { Separator } from "../ui/separator";
 import ThemeTogglerButton from "./ThemeToggle";
@@ -34,7 +34,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ isAuth }) => {
       {isOpen && (
         <div className="fixed inset-0 z-0 w-full animate-in fade-in-20 slide-in-from-top-5">
           <div className="absolute grid w-full gap-3 bg-white px-10 pb-8 pt-20 shadow-xl dark:bg-black">
-            {!isAuth ? (
+            {isAuth ? (
               <>
                 <NavLink
                   title="Dashboard"
@@ -44,36 +44,30 @@ const MobileNav: React.FC<MobileNavProps> = ({ isAuth }) => {
 
                 <Separator />
 
-                <NavLink
-                  title="Sign Out"
-                  className="flex w-full items-center font-semibold"
-                  href="/sign-out"
-                />
+                <LogoutLink className="flex w-full items-center font-semibold">
+                  Sign out
+                </LogoutLink>
               </>
             ) : (
               <>
-                <Link
-                  className="flex w-full items-center font-semibold"
+                <NavLink
+                  title="Pricing"
                   href="/pricing"
-                >
-                  Pricing
-                </Link>
+                  className="flex w-full items-center font-semibold"
+                />
 
                 <Separator />
 
-                <Link
-                  className="flex w-full items-center font-semibold"
-                  href="/sign-in"
-                >
-                  Sign in
-                </Link>
+                <LoginLink className="flex w-full items-center font-semibold">
+                  Sign In
+                </LoginLink>
               </>
             )}
 
             <Separator />
 
             <div className="flex flex-row items-center justify-start gap-2 font-semibold">
-              Theme: <ThemeTogglerButton />
+              Theme <ThemeTogglerButton />
             </div>
           </div>
         </div>

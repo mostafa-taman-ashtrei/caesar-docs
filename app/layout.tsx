@@ -20,17 +20,17 @@ interface RootLayoutProps {
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
-      <NextThemeProvider>
-        <body
-          className={cn(
-            "grainy min-h-screen font-sans antialiased",
-            inter.className
-          )}
-        >
+      <body
+        className={cn(
+          "grainy min-h-screen font-sans antialiased",
+          inter.className
+        )}
+      >
+        <NextThemeProvider>
           <Navbar />
           {children}
-        </body>
-      </NextThemeProvider>
+        </NextThemeProvider>
+      </body>
     </html>
   );
 };
