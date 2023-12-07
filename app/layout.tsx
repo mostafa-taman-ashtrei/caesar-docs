@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import Navbar from "@/components/nav/Navbar";
 import NextThemeProvider from "@/providers/NextThemeProvider";
+import TrpcProvider from "@/providers/TrpcProvider";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,17 +21,14 @@ interface RootLayoutProps {
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          "grainy min-h-screen font-sans antialiased",
-          inter.className
-        )}
-      >
-        <NextThemeProvider>
-          <Navbar />
-          {children}
-        </NextThemeProvider>
-      </body>
+      <TrpcProvider>
+        <body className={cn("grainy min-h-screen font-sans antialiased", inter.className)}>
+          <NextThemeProvider>
+            <Navbar />
+            {children}
+          </NextThemeProvider>
+        </body>
+      </TrpcProvider>
     </html>
   );
 };
