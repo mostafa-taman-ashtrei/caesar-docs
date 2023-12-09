@@ -2,6 +2,7 @@ import { privateProcedure, publicProcedure, router } from "./trpc";
 
 import { DB } from "@/lib/prisma";
 import { TRPCError } from "@trpc/server";
+import { UTApi } from "uploadthing/server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { z } from "zod";
 
@@ -48,6 +49,23 @@ export const appRouter = router({
 
         return files;
     }),
+
+    deleteFile: privateProcedure
+        .input(z.object({ id: z.string() }))
+        .mutation(async ({ ctx, input }) => {
+            const { userId } = ctx;
+
+            const file = await DB.file.findFirst({ where: { id: input.id, userId } });
+            if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+
+            const utapi = new UTApi();
+            const fileName = file.url.substring(file.url.lastIndexOf("/") + 1);
+
+            const uploadThingRes = await utapi.deleteFiles(fileName);
+            if (uploadThingRes.success) await DB.file.delete({ where: { id: input.id } });
+
+            return file;
+        })
 });
 
 // export type definition of API
