@@ -29,17 +29,22 @@ const Navbar: React.FC<NavbarProps> = async () => {
           <MobileNav isAuth={!!user} />
 
           <div className="hidden items-center space-x-4 sm:flex">
-            <NavLink title="Pricing" href="/pricing" />
 
-            {!user ? (
+            {!user ? <>
+              <NavLink title="Pricing" href="/pricing" />
+
               <RegisterLink className={buttonVariants({ size: "default" })}>
                 Get started <ArrowRight className="ml-1.5 h-5 w-5" />
               </RegisterLink>
-            ) : (
-              <LogoutLink className="font-semibold hover:underline">
-                Sign out
-              </LogoutLink>
-            )}
+            </>
+
+              : <>
+                <NavLink title="Dashboard" href="/dashboard" />
+                <LogoutLink className="font-semibold hover:underline">
+                  Sign out
+                </LogoutLink>
+              </>
+            }
 
             <ThemeTogglerButton />
           </div>

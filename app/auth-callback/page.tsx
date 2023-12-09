@@ -13,7 +13,6 @@ const AuthCallBackPage: React.FC = () => {
 
     trpc.authCallback.useQuery(undefined, {
         onSuccess: ({ success }) => {
-            // user is synced to db
             if (success) router.push(origin ? `/${origin}` : "/dashboard");
         },
         onError: (err) => {
