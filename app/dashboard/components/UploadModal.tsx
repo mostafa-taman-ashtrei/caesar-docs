@@ -80,15 +80,15 @@ const UploadModal: React.FC<UploadModalProps> = () => {
         startPolling({ key });
     };
 
-
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="flex flex-row justify-center items-center gap-2">
+                <Button className="flex flex-row justify-center items-center gap-2 w-1/4">
                     <UploadCloud />
                     Upload
                 </Button>
             </DialogTrigger>
+
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Upload a PDF file</DialogTitle>

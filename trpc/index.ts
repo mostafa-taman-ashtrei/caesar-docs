@@ -37,6 +37,17 @@ export const appRouter = router({
             if (!file) throw new TRPCError({ code: "NOT_FOUND" });
             return file;
         })
+    ,
+
+    getUserFiles: privateProcedure.query(async ({ ctx }) => {
+        const { userId } = ctx;
+
+        const files = await DB.file.findMany({
+            where: { userId }
+        });
+
+        return files;
+    }),
 });
 
 // export type definition of API

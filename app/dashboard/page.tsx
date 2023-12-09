@@ -1,5 +1,6 @@
 import Container from "@/components/general/Container";
 import { DB } from "@/lib/prisma";
+import FileGrid from "./components/FileGrid";
 import UploadModal from "./components/UploadModal";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
@@ -23,6 +24,8 @@ const DashboardPage: React.FC = async () => {
 
         <UploadModal />
       </div>
+
+      <FileGrid />
 
     </Container>
   );
