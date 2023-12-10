@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import { DB } from "@/lib/prisma";
+import PdfViewer from "./components/PdfViewer";
 import React from "react";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
@@ -29,7 +30,7 @@ const FilePage: React.FC<FilePageProps> = async ({ params }) => {
       <div className="max-w-8xl mx-auto w-full grow lg:flex xl:px-2">
         <div className="flex-1 xl:flex">
           <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
-            {file.name} is rendered here ...
+            <PdfViewer fileUrl={file.url} />
           </div>
         </div>
 
