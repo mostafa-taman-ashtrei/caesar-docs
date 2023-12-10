@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 
+import Chat from "./components/Chat/Chat";
 import { DB } from "@/lib/prisma";
 import PdfViewer from "./components/PdfViewer";
 import React from "react";
@@ -35,7 +36,7 @@ const FilePage: React.FC<FilePageProps> = async ({ params }) => {
         </div>
 
         <div className="flex-[0.75] shrink-0 border-t border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
-          <p className="my-6 text-center">Chat Page goes here ...</p>
+          <Chat fileId={file.id} />
         </div>
       </div>
     </div>
