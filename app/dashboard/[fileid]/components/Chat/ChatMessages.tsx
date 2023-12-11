@@ -1,11 +1,11 @@
 import { CheckCircle2, Loader } from "lucide-react";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
-import { ChatContext } from "@/contexts/Chat/ChatContext";
+import ChatMessagesSkeleton from "@/components/skeletons/ChatMessagesSkeleton";
 import { INFINITE_QUERY_LIMIT } from "@/constants";
 import Message from "./Message";
-import { Skeleton } from "@/components/ui/skeleton";
 import { trpc } from "@/app/_trpc/client";
+import useChat from "@/hooks/useChat";
 import { useIntersection } from "@mantine/hooks";
 
 interface ChatMessagesProps {
@@ -13,7 +13,7 @@ interface ChatMessagesProps {
 }
 
 const ChatMessages: React.FC<ChatMessagesProps> = ({ fileId }) => {
-    const { isLoading: isAiLoading } = useContext(ChatContext);
+    const { isLoading: isAiLoading } = useChat();
     const lastMessageRef = useRef<HTMLDivElement>(null);
 
     const { data, isLoading, fetchNextPage } = trpc.getFileMessages.useInfiniteQuery(
@@ -49,24 +49,10 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ fileId }) => {
     useEffect(() => { if (entry?.isIntersecting) fetchNextPage(); }, [entry, fetchNextPage]);
 
 
-    if (isLoading)
-        return (
-            <div className="flex max-h-[calc(100vh-3.5rem-7rem)] flex-1 flex-col-reverse p-3">
-                <div className="flex w-full flex-col gap-2">
-                    <Skeleton className="h-8 w-1/2" />
-                    <Skeleton className="h-8" />
-                    <Skeleton className="h-8" />
-                    <Skeleton className="h-8 w-1/2" />
-                    <Skeleton className="h-8" />
-                    <Skeleton className="h-8 w-1/2" />
-                    <Skeleton className="h-8 w-1/2" />
-                    <Skeleton className="h-8" />
-                </div>
-            </div>
-        );
+    if (isLoading) return <ChatMessagesSkeleton />;
 
     return (
-        <div className="scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex max-h-[calc(100vh-3.5rem-7rem)] flex-1 flex-col-reverse gap-4 overflow-y-auto border-zinc-200 p-3">
+        <div className="flex max-h-[calc(100vh-3.5rem-7rem)] flex-1 flex-col-reverse gap-4 overflow-y-auto border-zinc-200 p-3">
             {allMessages.length === 0 && !isLoading && (
                 <div className="flex flex-1 flex-col items-center justify-center gap-2">
                     <CheckCircle2 className="h-8 w-8 text-blue-500" />

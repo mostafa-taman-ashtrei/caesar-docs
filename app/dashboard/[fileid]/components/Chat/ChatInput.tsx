@@ -1,17 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChatContext } from "@/contexts/Chat/ChatContext";
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
-import { useContext } from "react";
+import useChat from "@/hooks/useChat";
 
 interface ChatInputProps {
     isDisabled?: boolean;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({ isDisabled }) => {
-    const { addMessage, handleInputChange, isLoading, message } = useContext(ChatContext);
+    const { addMessage, handleInputChange, isLoading, message } = useChat();
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key !== "Enter") return;

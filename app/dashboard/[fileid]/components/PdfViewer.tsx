@@ -7,7 +7,6 @@ import {
     ChevronDown,
     ChevronUp,
     Loader,
-    Loader2,
     RotateCw,
     Search,
 } from "lucide-react";
@@ -119,9 +118,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                     </div>
 
                     <Button
-                        disabled={
-                            numPages === undefined || currentPage === numPages
-                        }
+                        disabled={numPages === undefined || currentPage === numPages}
                         onClick={handlePageNavNext}
                         variant="ghost"
                         aria-label="next page"
@@ -196,7 +193,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                         <Document
                             loading={
                                 <div className="flex justify-center">
-                                    <Loader2 className="my-24 h-6 w-6 animate-spin" />
+                                    <Loader className="my-24 h-6 w-6 text-blue-500 animate-spin" />
                                 </div>
                             }
                             onLoadError={() =>
@@ -233,7 +230,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                                 key={"@" + scale}
                                 loading={
                                     <div className="flex justify-center">
-                                        <Loader className="my-24 h-6 w-6 animate-spin" />
+                                        <Loader className="my-24 h-6 w-6 text-blue-500 animate-spin" />
                                     </div>
                                 }
                                 onRenderSuccess={() => {

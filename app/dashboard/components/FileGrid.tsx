@@ -4,8 +4,8 @@ import { Calendar, FileText, Ghost, MessageCircle, Trash } from "lucide-react";
 import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import FileSkeleton from "@/components/skeletons/FileSkeleton";
 import Link from "next/link";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { trpc } from "@/app/_trpc/client";
@@ -29,7 +29,7 @@ const FileGrid: React.FC = () => {
         },
     });
 
-    if (isLoading) return <Skeleton className="mb-2 mt-8 h-80 w-full" />;
+    if (isLoading) return <FileSkeleton />;
 
     if (!files || files.length === 0)
         return (
@@ -46,7 +46,7 @@ const FileGrid: React.FC = () => {
         );
 
     return (
-        <ul className="mb-2 mt-8 grid grid-cols-1 gap-6 divide-y  md:grid-cols-2 lg:grid-cols-3">
+        <ul className="mb-2 mt-8 grid grid-cols-1 gap-6 divide-y md:grid-cols-2 lg:grid-cols-3">
             {files
                 ?.sort(
                     (a, b) =>
