@@ -85,19 +85,22 @@ export const appRouter = router({
             return { status: file.uploadStatus };
         }),
 
-
     getFileMessages: privateProcedure
-        .input(z.object({
-            limit: z.number().min(1).max(100).nullish(),
-            cursor: z.string().nullish(),
-            fileId: z.string(),
-        }))
+        .input(
+            z.object({
+                limit: z.number().min(1).max(100).nullish(),
+                cursor: z.string().nullish(),
+                fileId: z.string(),
+            })
+        )
         .query(async ({ ctx, input }) => {
             const { userId } = ctx;
             const { fileId, cursor } = input;
             const limit = input.limit ?? INFINITE_QUERY_LIMIT;
 
-            const file = await DB.file.findFirst({ where: { id: fileId, userId } });
+            const file = await DB.file.findFirst({
+                where: { id: fileId, userId },
+            });
 
             if (!file) throw new TRPCError({ code: "NOT_FOUND" });
 

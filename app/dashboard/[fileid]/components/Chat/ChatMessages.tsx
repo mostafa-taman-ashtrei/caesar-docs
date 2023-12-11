@@ -16,10 +16,14 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ fileId }) => {
     const { isLoading: isAiLoading } = useChat();
     const lastMessageRef = useRef<HTMLDivElement>(null);
 
-    const { data, isLoading, fetchNextPage } = trpc.getFileMessages.useInfiniteQuery(
-        { fileId, limit: INFINITE_QUERY_LIMIT },
-        { getNextPageParam: (lastPage) => lastPage?.nextCursor, keepPreviousData: true }
-    );
+    const { data, isLoading, fetchNextPage } =
+        trpc.getFileMessages.useInfiniteQuery(
+            { fileId, limit: INFINITE_QUERY_LIMIT },
+            {
+                getNextPageParam: (lastPage) => lastPage?.nextCursor,
+                keepPreviousData: true,
+            }
+        );
 
     const messages = data?.pages.flatMap((page) => page.messages);
 
@@ -39,15 +43,18 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ fileId }) => {
         ...(messages ?? []),
     ];
 
-    const isNextMessageSamePerson = (index: number) => allMessages[index - 1]?.isUserMessage === allMessages[index]?.isUserMessage;
+    const isNextMessageSamePerson = (index: number) =>
+        allMessages[index - 1]?.isUserMessage ===
+        allMessages[index]?.isUserMessage;
 
     const { ref, entry } = useIntersection({
         root: lastMessageRef.current,
         threshold: 1,
     });
 
-    useEffect(() => { if (entry?.isIntersecting) fetchNextPage(); }, [entry, fetchNextPage]);
-
+    useEffect(() => {
+        if (entry?.isIntersecting) fetchNextPage();
+    }, [entry, fetchNextPage]);
 
     if (isLoading) return <ChatMessagesSkeleton />;
 
@@ -56,9 +63,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ fileId }) => {
             {allMessages.length === 0 && !isLoading && (
                 <div className="flex flex-1 flex-col items-center justify-center gap-2">
                     <CheckCircle2 className="h-8 w-8 text-blue-500" />
-                    <h3 className="text-xl font-semibold">
-                        Done
-                    </h3>
+                    <h3 className="text-xl font-semibold">Done</h3>
                     <p className="text-sm text-zinc-500">
                         This is the begging of your document chat, ask a
                         question to get started.
@@ -66,14 +71,17 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ fileId }) => {
                 </div>
             )}
 
-            {allMessages && allMessages.length > 0 && !isLoading && allMessages.map((message, i) => (
-                <Message
-                    message={message}
-                    isNextMessageSamePerson={isNextMessageSamePerson(i)}
-                    key={message.id}
-                    ref={i === allMessages.length - 1 ? ref : undefined}
-                />
-            ))}
+            {allMessages &&
+                allMessages.length > 0 &&
+                !isLoading &&
+                allMessages.map((message, i) => (
+                    <Message
+                        message={message}
+                        isNextMessageSamePerson={isNextMessageSamePerson(i)}
+                        key={message.id}
+                        ref={i === allMessages.length - 1 ? ref : undefined}
+                    />
+                ))}
         </div>
     );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, FileText, Ghost, MessageCircle, Trash } from "lucide-react";
+import { Calendar, ExternalLink, FileText, Ghost, Trash } from "lucide-react";
 import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -97,10 +97,9 @@ const FileGrid: React.FC = () => {
                                     )}
                                 </div>
 
-                                <div className="flex items-center gap-1">
-                                    <MessageCircle className="h-4 w-4" />
-                                    10
-                                </div>
+                                <a href={file.url} target="_">
+                                    <ExternalLink className="h-4 w-4 cursor-pointer" />
+                                </a>
                             </div>
 
                             <Button

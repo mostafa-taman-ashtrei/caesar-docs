@@ -11,12 +11,12 @@ type StreamResponse = {
     // eslint-disable-next-line no-unused-vars
     handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     isLoading: boolean;
-}
+};
 
 export const ChatContext = createContext<StreamResponse>({
-    addMessage: () => { },
+    addMessage: () => {},
     message: "",
-    handleInputChange: () => { },
+    handleInputChange: () => {},
     isLoading: false,
 });
 
@@ -84,18 +84,23 @@ export const ChatContextProvider = ({ fileId, children }: Props) => {
             );
 
             setIsLoading(true);
-            return { previousMessages: previousMessages?.pages.flatMap((page) => page.messages) ?? [] };
+            return {
+                previousMessages:
+                    previousMessages?.pages.flatMap((page) => page.messages) ??
+                    [],
+            };
         },
 
         onSuccess: async (stream) => {
             setIsLoading(false);
 
-            if (!stream) return toast({
-                title: "Something went wrong!",
-                description: "There was a problem with this message ... please refresh this page and try again",
-                variant: "destructive",
-            });
-
+            if (!stream)
+                return toast({
+                    title: "Something went wrong!",
+                    description:
+                        "There was a problem with this message ... please refresh this page and try again",
+                    variant: "destructive",
+                });
 
             const reader = stream.getReader();
             const decoder = new TextDecoder();
@@ -119,30 +124,38 @@ export const ChatContextProvider = ({ fileId, children }: Props) => {
                         // ** The pages & pageParams are how react-query handles infinte queries.
                         if (!oldData) return { pages: [], pageParams: [] };
 
-
                         // ** Is there an AI message or not. If no create one if yes add to the existing message.
-                        const aiResponseExists = oldData.pages.some(
-                            (page) => page.messages.some((message) => message.id === "ai-response")
+                        const aiResponseExists = oldData.pages.some((page) =>
+                            page.messages.some(
+                                (message) => message.id === "ai-response"
+                            )
                         );
 
                         const updatedPages = oldData.pages.map((page) => {
                             if (page === oldData.pages[0]) {
                                 let updatedMessages;
 
-                                if (!aiResponseExists) updatedMessages = [
-                                    {
-                                        createdAt: new Date().toISOString(),
-                                        id: "ai-response",
-                                        text: accumulatedResponse,
-                                        isUserMessage: false,
-                                    },
-                                    ...page.messages,
-                                ];
-
-                                else updatedMessages = page.messages.map((message) => {
-                                    if (message.id === "ai-response") return { ...message, text: accumulatedResponse };
-                                    return message;
-                                });
+                                if (!aiResponseExists)
+                                    updatedMessages = [
+                                        {
+                                            createdAt: new Date().toISOString(),
+                                            id: "ai-response",
+                                            text: accumulatedResponse,
+                                            isUserMessage: false,
+                                        },
+                                        ...page.messages,
+                                    ];
+                                else
+                                    updatedMessages = page.messages.map(
+                                        (message) => {
+                                            if (message.id === "ai-response")
+                                                return {
+                                                    ...message,
+                                                    text: accumulatedResponse,
+                                                };
+                                            return message;
+                                        }
+                                    );
 
                                 return { ...page, messages: updatedMessages };
                             }
@@ -172,7 +185,8 @@ export const ChatContextProvider = ({ fileId, children }: Props) => {
         },
     });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+        setMessage(e.target.value);
 
     const addMessage = () => sendMessage({ message });
 

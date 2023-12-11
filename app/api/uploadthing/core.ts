@@ -43,7 +43,9 @@ const onUploadComplete = async ({ metadata, file }: UploadCompleteProps) => {
     });
 
     try {
-        const response = await fetch(`https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`);
+        const response = await fetch(
+            `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`
+        );
 
         const blob = await response.blob();
         const loader = new PDFLoader(blob);
@@ -52,23 +54,23 @@ const onUploadComplete = async ({ metadata, file }: UploadCompleteProps) => {
         // ** vectorize and index the pdf document
 
         const pineconeIndex = pineconeClient.Index(process.env.PINECONE_INDEX!);
-        const embeddings = new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY });
+        const embeddings = new OpenAIEmbeddings({
+            openAIApiKey: process.env.OPENAI_API_KEY,
+        });
 
-        await PineconeStore.fromDocuments(
-            pageLevelDocs,
-            embeddings,
-            { pineconeIndex, namespace: createdFile.id }
-        );
+        await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
+            pineconeIndex,
+            namespace: createdFile.id,
+        });
 
         await DB.file.update({
             data: { uploadStatus: "SUCCESS" },
-            where: { id: createdFile.id }
+            where: { id: createdFile.id },
         });
-
     } catch (error) {
         await DB.file.update({
             data: { uploadStatus: "FAILED" },
-            where: { id: createdFile.id }
+            where: { id: createdFile.id },
         });
 
         throw new Error(`Failed to process ${file.name}`);
@@ -76,8 +78,12 @@ const onUploadComplete = async ({ metadata, file }: UploadCompleteProps) => {
 };
 
 export const ourFileRouter = {
-    freePlanUploader: f({ pdf: { maxFileSize: "4MB" } }).middleware(middleware).onUploadComplete(onUploadComplete),
-    proPlanUploader: f({ pdf: { maxFileSize: "16MB" } }).middleware(middleware).onUploadComplete(onUploadComplete)
+    freePlanUploader: f({ pdf: { maxFileSize: "4MB" } })
+        .middleware(middleware)
+        .onUploadComplete(onUploadComplete),
+    proPlanUploader: f({ pdf: { maxFileSize: "16MB" } })
+        .middleware(middleware)
+        .onUploadComplete(onUploadComplete),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

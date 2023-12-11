@@ -2,5 +2,5 @@ import { z } from "zod";
 
 export const SendMessageRouteValidator = z.object({
     fileId: z.string(),
-    message: z.string()
+    message: z.string(),
 });

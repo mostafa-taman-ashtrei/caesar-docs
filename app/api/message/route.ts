@@ -16,13 +16,14 @@ export const POST = async (req: NextRequest) => {
         const { getUser } = getKindeServerSession();
         const user = await getUser();
 
-        if (user === null || !user.id) return new Response("Unauthorized", { status: 401 });
+        if (user === null || !user.id)
+            return new Response("Unauthorized", { status: 401 });
 
         const { id: userId } = user;
         const { fileId, message } = SendMessageRouteValidator.parse(body);
 
         const file = await DB.file.findFirst({
-            where: { id: fileId, userId }
+            where: { id: fileId, userId },
         });
 
         if (!file) return new Response("Not found", { status: 404 });
@@ -37,25 +38,29 @@ export const POST = async (req: NextRequest) => {
         });
 
         // ** Vectorize the user  message
-        const embeddings = new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY });
+        const embeddings = new OpenAIEmbeddings({
+            openAIApiKey: process.env.OPENAI_API_KEY,
+        });
         const pineconeIndex = pineconeClient.Index(process.env.PINECONE_INDEX!);
 
-        const vectorStore = await PineconeStore.fromExistingIndex(
-            embeddings,
-            { pineconeIndex, namespace: file.id }
-        );
+        const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+            pineconeIndex,
+            namespace: file.id,
+        });
 
         // TODO: Increase the number 4 for pro users.
         const results = await vectorStore.similaritySearch(message, 4);
 
         const prevMessages = await DB.message.findMany({
-            where: { fileId, },
+            where: { fileId },
             orderBy: { createdAt: "asc" },
             take: 6,
         });
 
         const formattedPrevMessages = prevMessages.map((msg) => ({
-            role: msg.isUserMessage ? ("user" as const) : ("assistant" as const),
+            role: msg.isUserMessage
+                ? ("user" as const)
+                : ("assistant" as const),
             content: msg.text,
         }));
 
@@ -66,7 +71,8 @@ export const POST = async (req: NextRequest) => {
             messages: [
                 {
                     role: "system",
-                    content: "Use the following pieces of context (or previous conversaton if needed) to answer the users question in markdown format.",
+                    content:
+                        "Use the following pieces of context (or previous conversaton if needed) to answer the users question in markdown format.",
                 },
                 {
                     role: "user",
@@ -76,10 +82,10 @@ export const POST = async (req: NextRequest) => {
 
                 PREVIOUS CONVERSATION:
                 ${formattedPrevMessages.map((message) => {
-                        if (message.role === "user")
-                            return `User: ${message.content}\n`;
-                        return `Assistant: ${message.content}\n`;
-                    })}
+                    if (message.role === "user")
+                        return `User: ${message.content}\n`;
+                    return `Assistant: ${message.content}\n`;
+                })}
 
                 \n----------------\n
 
@@ -98,10 +104,10 @@ export const POST = async (req: NextRequest) => {
                         text: completion,
                         isUserMessage: false,
                         fileId,
-                        userId
-                    }
+                        userId,
+                    },
                 });
-            }
+            },
         });
 
         return new StreamingTextResponse(stream);

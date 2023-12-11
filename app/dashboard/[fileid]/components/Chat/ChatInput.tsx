@@ -21,7 +21,6 @@ const ChatInput: React.FC<ChatInputProps> = ({ isDisabled }) => {
 
     const handleClickSend = () => addMessage();
 
-
     return (
         <div className="absolute bottom-0 left-0 w-full">
             <div className="relative flex h-full flex-1 items-stretch">

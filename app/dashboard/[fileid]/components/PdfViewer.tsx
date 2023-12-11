@@ -3,13 +3,7 @@
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
-import {
-    ChevronDown,
-    ChevronUp,
-    Loader,
-    RotateCw,
-    Search,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, Loader, RotateCw, Search } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 import {
     DropdownMenu,
@@ -26,6 +20,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import PdfFullScreen from "./pdf/PdfFullScreen";
 import SimpleBar from "simplebar-react";
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
@@ -118,7 +113,9 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                     </div>
 
                     <Button
-                        disabled={numPages === undefined || currentPage === numPages}
+                        disabled={
+                            numPages === undefined || currentPage === numPages
+                        }
                         onClick={handlePageNavNext}
                         variant="ghost"
                         aria-label="next page"
@@ -181,6 +178,8 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
+
+                    <PdfFullScreen fileUrl={fileUrl} />
                 </div>
             </div>
 
@@ -193,7 +192,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                         <Document
                             loading={
                                 <div className="flex justify-center">
-                                    <Loader className="my-24 h-6 w-6 text-blue-500 animate-spin" />
+                                    <Loader className="my-24 h-6 w-6 animate-spin text-blue-500" />
                                 </div>
                             }
                             onLoadError={() =>
@@ -230,7 +229,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                                 key={"@" + scale}
                                 loading={
                                     <div className="flex justify-center">
-                                        <Loader className="my-24 h-6 w-6 text-blue-500 animate-spin" />
+                                        <Loader className="my-24 h-6 w-6 animate-spin text-blue-500" />
                                     </div>
                                 }
                                 onRenderSuccess={() => {
