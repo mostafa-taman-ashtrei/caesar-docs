@@ -7,40 +7,41 @@ import React from "react";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 interface FilePageProps {
-  params: {
-    fileid: string;
-  };
+    params: {
+        fileid: string;
+    };
 }
 
 const FilePage: React.FC<FilePageProps> = async ({ params }) => {
-  const { fileid } = params;
+    const { fileid } = params;
 
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
 
-  if (!user || !user.id) redirect(`/auth-callback?origin=dashboard/${fileid}`);
+    if (!user || !user.id)
+        redirect(`/auth-callback?origin=dashboard/${fileid}`);
 
-  const file = await DB.file.findFirst({
-    where: { id: fileid, userId: user.id },
-  });
+    const file = await DB.file.findFirst({
+        where: { id: fileid, userId: user.id },
+    });
 
-  if (!file) notFound();
+    if (!file) notFound();
 
-  return (
-    <div className="flex h-[calc(100vh-3.5rem)] flex-1 flex-col justify-between">
-      <div className="max-w-8xl mx-auto w-full grow lg:flex xl:px-2">
-        <div className="flex-1 xl:flex">
-          <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
-            <PdfViewer fileUrl={file.url} />
-          </div>
+    return (
+        <div className="flex h-[calc(100vh-3.5rem)] flex-1 flex-col justify-between">
+            <div className="max-w-8xl mx-auto w-full grow lg:flex xl:px-2">
+                <div className="flex-1 xl:flex">
+                    <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
+                        <PdfViewer fileUrl={file.url} />
+                    </div>
+                </div>
+
+                <div className="flex-[0.75] shrink-0 border-t border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
+                    <Chat fileId={file.id} />
+                </div>
+            </div>
         </div>
-
-        <div className="flex-[0.75] shrink-0 border-t border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
-          <Chat fileId={file.id} />
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default FilePage;

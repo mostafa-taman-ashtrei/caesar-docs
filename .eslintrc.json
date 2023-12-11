@@ -1,35 +1,35 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "prettier",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
-  "rules": {
-    "react/self-closing-comp": [
-      "error",
-      {
-        "component": true,
-        "html": true
-      }
+    "extends": [
+        "next/core-web-vitals",
+        "prettier",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    "semi": "warn",
-    "sort-imports": "warn",
-    "array-bracket-newline": "warn",
-    "no-alert": "error",
-    "no-console": "warn",
-    "no-duplicate-imports": "error",
-    "no-unused-vars": "error",
-    "jsx-quotes": ["error", "prefer-double"],
-    "quotes": [
-      "error",
-      "double",
-      {
-        "allowTemplateLiterals": true
-      }
-    ],
-    "@typescript-eslint/no-var-requires": "off"
-  }
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "react/self-closing-comp": [
+            "error",
+            {
+                "component": true,
+                "html": true
+            }
+        ],
+        "semi": "warn",
+        "sort-imports": "warn",
+        "array-bracket-newline": "warn",
+        "no-alert": "error",
+        "no-console": "warn",
+        "no-duplicate-imports": "error",
+        "no-unused-vars": "error",
+        "jsx-quotes": ["error", "prefer-double"],
+        "quotes": [
+            "error",
+            "double",
+            {
+                "allowTemplateLiterals": true
+            }
+        ],
+        "@typescript-eslint/no-var-requires": "off"
+    }
 }

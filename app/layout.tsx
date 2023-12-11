@@ -11,32 +11,32 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Raven",
-  description: "Chat with and manage your documents using the power of A.I",
+    title: "Raven",
+    description: "Chat with and manage your documents using the power of A.I",
 };
 
 interface RootLayoutProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
-  return (
-    <html lang="en">
-      <TrpcProvider>
-        <body
-          className={cn(
-            "grainy min-h-screen font-sans antialiased",
-            inter.className
-          )}
-        >
-          <NextThemeProvider>
-            <Navbar />
-            {children}
-          </NextThemeProvider>
-        </body>
-      </TrpcProvider>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <TrpcProvider>
+                <body
+                    className={cn(
+                        "grainy min-h-screen font-sans antialiased",
+                        inter.className
+                    )}
+                >
+                    <NextThemeProvider>
+                        <Navbar />
+                        {children}
+                    </NextThemeProvider>
+                </body>
+            </TrpcProvider>
+        </html>
+    );
 };
 
 export default RootLayout;

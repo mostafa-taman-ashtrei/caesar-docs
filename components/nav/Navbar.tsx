@@ -1,7 +1,7 @@
 import {
-  LogoutLink,
-  RegisterLink,
-  getKindeServerSession,
+    LogoutLink,
+    RegisterLink,
+    getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { ArrowRight } from "lucide-react";
@@ -12,46 +12,51 @@ import React from "react";
 import ThemeTogglerButton from "./ThemeToggle";
 import { buttonVariants } from "../ui/button";
 
-interface NavbarProps { }
+interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
 
-  return (
-    <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full  bg-white backdrop-blur-lg transition-all dark:bg-black ">
-      <div className="px-7">
-        <div className="flex h-14 items-center justify-between">
-          <Link href="/" className="z-40 flex font-semibold">
-            <span>RAVEN</span>
-          </Link>
+    return (
+        <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full  bg-white backdrop-blur-lg transition-all dark:bg-black ">
+            <div className="px-7">
+                <div className="flex h-14 items-center justify-between">
+                    <Link href="/" className="z-40 flex font-semibold">
+                        <span>RAVEN</span>
+                    </Link>
 
-          <MobileNav isAuth={!!user} />
+                    <MobileNav isAuth={!!user} />
 
-          <div className="hidden items-center space-x-4 sm:flex">
+                    <div className="hidden items-center space-x-4 sm:flex">
+                        {!user ? (
+                            <>
+                                <NavLink title="Pricing" href="/pricing" />
 
-            {!user ? <>
-              <NavLink title="Pricing" href="/pricing" />
+                                <RegisterLink
+                                    className={buttonVariants({
+                                        size: "default",
+                                    })}
+                                >
+                                    Get started{" "}
+                                    <ArrowRight className="ml-1.5 h-5 w-5" />
+                                </RegisterLink>
+                            </>
+                        ) : (
+                            <>
+                                <NavLink title="Dashboard" href="/dashboard" />
+                                <LogoutLink className="font-semibold hover:underline">
+                                    Sign out
+                                </LogoutLink>
+                            </>
+                        )}
 
-              <RegisterLink className={buttonVariants({ size: "default" })}>
-                Get started <ArrowRight className="ml-1.5 h-5 w-5" />
-              </RegisterLink>
-            </>
-
-              : <>
-                <NavLink title="Dashboard" href="/dashboard" />
-                <LogoutLink className="font-semibold hover:underline">
-                  Sign out
-                </LogoutLink>
-              </>
-            }
-
-            <ThemeTogglerButton />
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
+                        <ThemeTogglerButton />
+                    </div>
+                </div>
+            </div>
+        </nav>
+    );
 };
 
 export default Navbar;

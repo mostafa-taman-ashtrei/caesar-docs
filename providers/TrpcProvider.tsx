@@ -21,9 +21,7 @@ const TrpcProvider: React.FC<TrpcProviderProps> = ({ children }) => {
     );
 
     return (
-        <trpc.Provider
-            client={trpcClient}
-            queryClient={queryClient}>
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
             <QueryClientProvider client={queryClient}>
                 {children}
             </QueryClientProvider>

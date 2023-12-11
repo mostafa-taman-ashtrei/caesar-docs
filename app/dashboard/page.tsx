@@ -6,29 +6,26 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
 const DashboardPage: React.FC = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
 
-  if (!user || !user.id) redirect("/auth-callback?origin=dashboard");
+    if (!user || !user.id) redirect("/auth-callback?origin=dashboard");
 
-  const syncedUser = await DB.user.findFirst({ where: { id: user.id } });
+    const syncedUser = await DB.user.findFirst({ where: { id: user.id } });
 
-  if (!syncedUser) redirect("/auth-callback?origin=dashboard");
+    if (!syncedUser) redirect("/auth-callback?origin=dashboard");
 
-  return (
-    <Container>
-      <div className="mt-8 flex flex-col items-start justify-between gap-4  pb-5 sm:flex-row sm:items-center sm:gap-0">
-        <h1 className="mb-3 font-bold text-5xl">
-          Files
-        </h1>
+    return (
+        <Container>
+            <div className="mt-8 flex flex-col items-start justify-between gap-4  pb-5 sm:flex-row sm:items-center sm:gap-0">
+                <h1 className="mb-3 text-5xl font-bold">Files</h1>
 
-        <UploadModal />
-      </div>
+                <UploadModal />
+            </div>
 
-      <FileGrid />
-
-    </Container>
-  );
+            <FileGrid />
+        </Container>
+    );
 };
 
 export default DashboardPage;

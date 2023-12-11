@@ -15,12 +15,10 @@ const isAuth = middleware(async (opts) => {
 
     if (!user || !user.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
-
     return opts.next({
-        ctx: { userId: user.id, user }
+        ctx: { userId: user.id, user },
     });
 });
-
 
 // Base router and procedure helpers
 export const router = t.router;

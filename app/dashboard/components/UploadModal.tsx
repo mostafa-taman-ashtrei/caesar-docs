@@ -1,6 +1,12 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import DropZone from "./DropZone";
@@ -11,9 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
 
-interface UploadModalProps {
-
-}
+interface UploadModalProps {}
 
 const UploadModal: React.FC<UploadModalProps> = () => {
     const router = useRouter();
@@ -38,13 +42,13 @@ const UploadModal: React.FC<UploadModalProps> = () => {
         return interval;
     };
 
-    const { mutate: startPolling } = trpc.getFile.useMutation(
-        {
-            onSuccess: (file) => { router.push(`/dashboard/${file.id}`); },
-            retry: true,
-            retryDelay: 500,
-        }
-    );
+    const { mutate: startPolling } = trpc.getFile.useMutation({
+        onSuccess: (file) => {
+            router.push(`/dashboard/${file.id}`);
+        },
+        retry: true,
+        retryDelay: 500,
+    });
 
     const handleUpload = async (acceptedFile: File[]) => {
         setIsUploading(true);
@@ -64,7 +68,6 @@ const UploadModal: React.FC<UploadModalProps> = () => {
         const [fileResponse] = res;
         const key = fileResponse?.key;
 
-
         if (!key) {
             toast({
                 title: "Something went wrong",
@@ -83,7 +86,7 @@ const UploadModal: React.FC<UploadModalProps> = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="flex flex-row justify-center items-center gap-2 w-1/4">
+                <Button className="flex w-1/4 flex-row items-center justify-center gap-2">
                     <UploadCloud />
                     Upload
                 </Button>
