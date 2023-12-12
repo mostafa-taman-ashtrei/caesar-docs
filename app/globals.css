@@ -87,3 +87,8 @@
         scrollbar-width: none; /* Firefox */
     }
 }
+
+.gradient-primary {
+    --tw-gradient-stops: theme("colors.blue.800"), theme("colors.sky.500"),
+        theme("colors.violet.700");
+}
