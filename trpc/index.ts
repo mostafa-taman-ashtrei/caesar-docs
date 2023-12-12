@@ -1,9 +1,11 @@
+import { INFINITE_QUERY_LIMIT, PLANS } from "@/constants";
+import { getUserSubscriptionPlan, stripe } from "@/lib/stripe";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 
 import { DB } from "@/lib/prisma";
-import { INFINITE_QUERY_LIMIT } from "@/constants";
 import { TRPCError } from "@trpc/server";
 import { UTApi } from "uploadthing/server";
+import { absoluteUrl } from "@/lib/utils";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { z } from "zod";
 
@@ -126,6 +128,48 @@ export const appRouter = router({
 
             return { messages, nextCursor };
         }),
+
+    createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
+        const { userId } = ctx;
+        const billingUrl = absoluteUrl("/dashboard/billing");
+
+        if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+        const dbUser = await DB.user.findFirst({ where: { id: userId } });
+
+        if (!dbUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+        const subscriptionPlan = await getUserSubscriptionPlan();
+
+        if (subscriptionPlan.isSubscribed && dbUser.stripeCustomerId) {
+            const stripeSession = await stripe.billingPortal.sessions.create({
+                customer: dbUser.stripeCustomerId,
+                return_url: billingUrl,
+            });
+
+            return { url: stripeSession.url };
+        }
+
+        const stripeSession = await stripe.checkout.sessions.create({
+            success_url: billingUrl,
+            cancel_url: billingUrl,
+            payment_method_types: ["card", "paypal"],
+            mode: "subscription",
+            billing_address_collection: "auto",
+            line_items: [
+                {
+                    price: PLANS.find((plan) => plan.name === "Pro")?.price
+                        .priceIds.test,
+                    quantity: 1,
+                },
+            ],
+            metadata: {
+                userId: userId,
+            },
+        });
+
+        return { url: stripeSession.url };
+    }),
 });
 
 // export type definition of API

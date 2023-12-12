@@ -1,3 +1,5 @@
+"use client";
+
 import { CheckCircle2, HelpCircle, XCircle } from "lucide-react";
 import { PLANS, pricingItems } from "@/constants";
 import {
@@ -10,10 +12,20 @@ import {
 import { Button } from "@/components/ui/button";
 import GradientText from "@/components/general/GradientText";
 import { cn } from "@/lib/utils";
+import { trpc } from "@/app/_trpc/client";
 
 const PricingBoxes: React.FC = () => {
     const getPlanPrice = (plan: string) =>
         PLANS.find((p) => p.slug === plan.toLowerCase())?.price.amount || 0;
+
+    const { mutate: createStripeSession } =
+        trpc.createStripeSession.useMutation({
+            onSuccess: ({ url }) => {
+                window.location.href = url ?? "/dashboard/billing";
+            },
+        });
+
+    const handleUpgrade = () => createStripeSession();
 
     return (
         <div className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-2">
@@ -102,7 +114,11 @@ const PricingBoxes: React.FC = () => {
                                     Get Started For Free
                                 </Button>
                             ) : (
-                                <Button className="w-full" variant="gradient">
+                                <Button
+                                    className="w-full"
+                                    variant="gradient"
+                                    onClick={handleUpgrade}
+                                >
                                     Upgrade To Pro
                                 </Button>
                             )}
