@@ -59,7 +59,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ fileId }) => {
     if (isLoading) return <ChatMessagesSkeleton />;
 
     return (
-        <div className="flex max-h-[calc(100vh-3.5rem-7rem)] flex-1 flex-col-reverse gap-4 overflow-y-auto border-zinc-200 p-3">
+        <div className="flex max-h-[calc(100vh-1.5rem-7rem)] flex-1 flex-col-reverse gap-4 overflow-y-auto border-zinc-200 p-3 scrollbar-thin">
             {allMessages.length === 0 && !isLoading && (
                 <div className="flex flex-1 flex-col items-center justify-center gap-2">
                     <CheckCircle2 className="h-8 w-8 text-blue-500" />

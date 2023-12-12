@@ -35,9 +35,9 @@ const ChatInput: React.FC<ChatInputProps> = ({ isDisabled }) => {
 
                     <Button
                         disabled={isLoading || isDisabled}
-                        className="rounded-md"
                         aria-label="send message"
                         onClick={handleClickSend}
+                        variant="secondary"
                     >
                         <Send className="h-4 w-4" />
                     </Button>

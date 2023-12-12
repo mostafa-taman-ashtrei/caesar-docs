@@ -86,9 +86,12 @@ const UploadModal: React.FC<UploadModalProps> = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="flex w-1/4 flex-row items-center justify-center gap-2">
+                <Button
+                    className="flex w-1/4 flex-row items-center justify-center gap-2"
+                    variant="secondary"
+                >
                     <UploadCloud />
-                    Upload
+                    Upload New Document
                 </Button>
             </DialogTrigger>
 

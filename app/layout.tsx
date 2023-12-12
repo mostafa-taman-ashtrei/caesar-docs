@@ -25,7 +25,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
             <TrpcProvider>
                 <body
                     className={cn(
-                        "grainy min-h-screen font-sans antialiased",
+                        "min-h-screen font-sans antialiased",
                         inter.className
                     )}
                 >

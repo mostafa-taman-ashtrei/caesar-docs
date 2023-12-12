@@ -26,7 +26,7 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
 
     if (isLoading)
         return (
-            <div className="relative flex  min-h-full flex-col justify-between gap-2 divide-y divide-zinc-200">
+            <div className="relative flex  min-h-full flex-col justify-between gap-2">
                 <div className="mb-28 flex flex-1 flex-col items-center justify-center">
                     <div className="flex flex-col items-center gap-2">
                         <Loader className="h-8 w-8 animate-spin text-blue-500" />
@@ -43,7 +43,7 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
 
     if (data?.status === "PROCESSING")
         return (
-            <div className="relative flex  min-h-full flex-col justify-between gap-2 divide-y divide-zinc-200">
+            <div className="relative flex  min-h-full flex-col justify-between gap-2">
                 <div className="mb-28 flex flex-1 flex-col items-center justify-center">
                     <div className="flex flex-col items-center gap-2">
                         <Loader className="h-8 w-8 animate-spin text-blue-500" />
@@ -63,7 +63,7 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
 
     if (data?.status === "FAILED")
         return (
-            <div className="relative flex min-h-full flex-col justify-between gap-2 divide-y divide-zinc-200">
+            <div className="relative flex min-h-full flex-col justify-between gap-2">
                 <div className="mb-28 flex flex-1 flex-col items-center justify-center">
                     <div className="flex flex-col items-center gap-2">
                         <AlertCircle className="h-8 w-8 text-red-500" />
