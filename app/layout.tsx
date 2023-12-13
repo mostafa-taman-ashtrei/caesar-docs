@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import Navbar from "@/components/nav/Navbar";
 import NextThemeProvider from "@/providers/NextThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
 import TrpcProvider from "@/providers/TrpcProvider";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +31,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
                     )}
                 >
                     <NextThemeProvider>
+                        <Toaster />
                         <Navbar />
                         {children}
                     </NextThemeProvider>

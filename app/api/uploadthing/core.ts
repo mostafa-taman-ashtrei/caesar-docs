@@ -2,8 +2,10 @@ import { type FileRouter, createUploadthing } from "uploadthing/next";
 import { DB } from "@/lib/prisma";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { PLANS } from "@/constants";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { pineconeClient } from "@/lib/pinecone";
 
 const f = createUploadthing();
@@ -13,7 +15,9 @@ const middleware = async () => {
     const user = await getUser();
 
     if (!user || !user.id) throw new Error("Unauthorized");
-    return { userId: user.id };
+
+    const subscriptionPlan = await getUserSubscriptionPlan();
+    return { subscriptionPlan, userId: user.id };
 };
 
 type UploadCompleteProps = {
@@ -77,11 +81,16 @@ const onUploadComplete = async ({ metadata, file }: UploadCompleteProps) => {
     }
 };
 
+const freePlanMaxSize = PLANS.find((plan) => plan.name === "Free Forever")!
+    .maxDocumentSize.mb as "4MB";
+const proPlanMaxSize = PLANS.find((plan) => plan.name === "Pro")!
+    .maxDocumentSize.mb as "16MB";
+
 export const ourFileRouter = {
-    freePlanUploader: f({ pdf: { maxFileSize: "4MB" } })
+    freePlanUploader: f({ pdf: { maxFileSize: freePlanMaxSize } })
         .middleware(middleware)
         .onUploadComplete(onUploadComplete),
-    proPlanUploader: f({ pdf: { maxFileSize: "16MB" } })
+    proPlanUploader: f({ pdf: { maxFileSize: proPlanMaxSize } })
         .middleware(middleware)
         .onUploadComplete(onUploadComplete),
 } satisfies FileRouter;

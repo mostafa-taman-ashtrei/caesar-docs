@@ -5,7 +5,11 @@ export const PLANS = [
         name: "Free Forever",
         slug: "free",
         quota: 10,
-        pagesPerPdf: 5,
+        pagesPerPdf: 50,
+        maxDocumentSize: {
+            bytes: 4_194_304, // ** in bytes,
+            mb: "4MB"
+        },
         price: {
             amount: 0,
             priceIds: {
@@ -18,7 +22,11 @@ export const PLANS = [
         name: "Pro",
         slug: "pro",
         quota: 50,
-        pagesPerPdf: 25,
+        pagesPerPdf: 200,
+        maxDocumentSize: {
+            bytes: 16_777_216, // ** in bytes
+            mb: "16MB"
+        },
         price: {
             amount: 7.99,
             priceIds: {

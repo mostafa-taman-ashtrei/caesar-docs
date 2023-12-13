@@ -1,25 +1,32 @@
 import { File, Loader2, UploadCloud } from "lucide-react";
+import ReactDropzone, { FileRejection } from "react-dropzone";
 
 import { Progress } from "@/components/ui/progress";
-import ReactDropzone from "react-dropzone";
 
 interface DropZoneProps {
     isUploading: boolean;
     uploadProgress: number;
     // eslint-disable-next-line no-unused-vars
     handleUpload: (acceptedFile: File[]) => Promise<void>;
+    // eslint-disable-next-line no-unused-vars
+    handleError: (fileRejections: FileRejection[]) => void;
+    maxDocumentSize: number;
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
     isUploading,
     uploadProgress,
+    maxDocumentSize,
     handleUpload,
+    handleError
 }) => {
     return (
         <ReactDropzone
             multiple={false}
-            onDrop={(acceptedFiles) => handleUpload(acceptedFiles)}
             noClick
+            maxSize={maxDocumentSize}
+            onDropRejected={(rejections) => handleError(rejections)}
+            onDropAccepted={(acceptedFiles) => handleUpload(acceptedFiles)}
         >
             {({ getRootProps, getInputProps, acceptedFiles }) => (
                 <div

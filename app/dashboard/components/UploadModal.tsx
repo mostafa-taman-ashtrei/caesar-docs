@@ -10,21 +10,29 @@ import {
 
 import { Button } from "@/components/ui/button";
 import DropZone from "./DropZone";
+import { FileRejection } from "react-dropzone";
 import { UploadCloud } from "lucide-react";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { toast } from "@/components/ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
 
-interface UploadModalProps {}
+interface UploadModalProps {
+    subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>
+}
 
-const UploadModal: React.FC<UploadModalProps> = () => {
+const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
     const router = useRouter();
+    const { maxDocumentSize, isSubscribed } = subscriptionPlan;
 
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
-    const { startUpload } = useUploadThing("freePlanUploader");
+    const [error, setError] = useState<string | null>(null);
+
+    const { startUpload } = useUploadThing(isSubscribed ? "proPlanUploader" : "freePlanUploader");
+
 
     const startSimulatedProgress = () => {
         setUploadProgress(0);
@@ -49,6 +57,14 @@ const UploadModal: React.FC<UploadModalProps> = () => {
         retry: true,
         retryDelay: 500,
     });
+
+    const handleError = (fileRejections: FileRejection[]) => {
+        setError(`${fileRejections[0].errors[0].message} ... Upgrade to Pro to upload larger files.`);
+        setUploadProgress(0);
+        setIsUploading(false);
+
+        return;
+    };
 
     const handleUpload = async (acceptedFile: File[]) => {
         setIsUploading(true);
@@ -100,11 +116,17 @@ const UploadModal: React.FC<UploadModalProps> = () => {
                     <DialogTitle>Upload a PDF file</DialogTitle>
                 </DialogHeader>
 
-                <DropZone
-                    isUploading={isUploading}
-                    uploadProgress={uploadProgress}
-                    handleUpload={handleUpload}
-                />
+                {
+                    error
+                        ? <p>{error}</p>
+                        : <DropZone
+                            isUploading={isUploading}
+                            uploadProgress={uploadProgress}
+                            maxDocumentSize={!maxDocumentSize ? 16_777_216 : maxDocumentSize.bytes}
+                            handleUpload={handleUpload}
+                            handleError={handleError}
+                        />
+                }
             </DialogContent>
         </Dialog>
     );

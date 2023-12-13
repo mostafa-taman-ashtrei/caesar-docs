@@ -68,7 +68,7 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
                     <div className="flex flex-col items-center gap-2">
                         <AlertCircle className="h-8 w-8 text-red-500" />
                         <h3 className="text-xl font-semibold">
-                            Too many pages in PDF
+                            There was an error with processing this document.
                         </h3>
 
                         <Link
