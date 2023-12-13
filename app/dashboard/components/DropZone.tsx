@@ -18,7 +18,7 @@ const DropZone: React.FC<DropZoneProps> = ({
     uploadProgress,
     maxDocumentSize,
     handleUpload,
-    handleError
+    handleError,
 }) => {
     return (
         <ReactDropzone

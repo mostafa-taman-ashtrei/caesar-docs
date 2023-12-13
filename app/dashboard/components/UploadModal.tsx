@@ -10,17 +10,17 @@ import {
 
 import { Button } from "@/components/ui/button";
 import DropZone from "./DropZone";
+import ErrorZone from "./ErrorZone";
 import { FileRejection } from "react-dropzone";
 import { UploadCloud } from "lucide-react";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
-import { toast } from "@/components/ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
 
 interface UploadModalProps {
-    subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>
+    subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
 }
 
 const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
@@ -31,8 +31,9 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
     const [uploadProgress, setUploadProgress] = useState(0);
     const [error, setError] = useState<string | null>(null);
 
-    const { startUpload } = useUploadThing(isSubscribed ? "proPlanUploader" : "freePlanUploader");
-
+    const { startUpload } = useUploadThing(
+        isSubscribed ? "proPlanUploader" : "freePlanUploader"
+    );
 
     const startSimulatedProgress = () => {
         setUploadProgress(0);
@@ -59,7 +60,12 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
     });
 
     const handleError = (fileRejections: FileRejection[]) => {
-        setError(`${fileRejections[0].errors[0].message} ... Upgrade to Pro to upload larger files.`);
+        const errorMessage =
+            fileRejections[0].errors[0].code === "file-too-large"
+                ? `Your current plan only supports files up to ${maxDocumentSize?.mb}.`
+                : "There seems to be some abnormalities with this file.";
+
+        setError(errorMessage);
         setUploadProgress(0);
         setIsUploading(false);
 
@@ -73,11 +79,9 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
         const res = await startUpload(acceptedFile);
 
         if (!res) {
-            toast({
-                title: "Something went wrong",
-                description: "Please try again later",
-                variant: "destructive",
-            });
+            setUploadProgress(0);
+            setIsUploading(false);
+            setError("Something went wrong ... please try again later.");
             return;
         }
 
@@ -85,11 +89,9 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
         const key = fileResponse?.key;
 
         if (!key) {
-            toast({
-                title: "Something went wrong",
-                description: "Please try again later",
-                variant: "destructive",
-            });
+            setUploadProgress(0);
+            setIsUploading(false);
+            setError("Something went wrong ... please try again later.");
             return;
         }
 
@@ -116,17 +118,21 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
                     <DialogTitle>Upload a PDF file</DialogTitle>
                 </DialogHeader>
 
-                {
-                    error
-                        ? <p>{error}</p>
-                        : <DropZone
-                            isUploading={isUploading}
-                            uploadProgress={uploadProgress}
-                            maxDocumentSize={!maxDocumentSize ? 16_777_216 : maxDocumentSize.bytes}
-                            handleUpload={handleUpload}
-                            handleError={handleError}
-                        />
-                }
+                {error ? (
+                    <ErrorZone error={error} setError={setError} />
+                ) : (
+                    <DropZone
+                        isUploading={isUploading}
+                        uploadProgress={uploadProgress}
+                        maxDocumentSize={
+                            !maxDocumentSize
+                                ? 16_777_216
+                                : maxDocumentSize.bytes
+                        }
+                        handleUpload={handleUpload}
+                        handleError={handleError}
+                    />
+                )}
             </DialogContent>
         </Dialog>
     );

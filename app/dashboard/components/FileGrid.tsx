@@ -105,7 +105,7 @@ const FileGrid: React.FC = () => {
                             <Button
                                 size="sm"
                                 variant="ghost"
-                                className="text-red-500 hover:text-red-600 rounded-full"
+                                className="rounded-full text-red-500 hover:text-red-600"
                                 onClick={() => deleteFile({ id: file.id })}
                                 disabled={deletingFile === file.id}
                             >

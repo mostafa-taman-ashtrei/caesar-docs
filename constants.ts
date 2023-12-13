@@ -8,7 +8,7 @@ export const PLANS = [
         pagesPerPdf: 50,
         maxDocumentSize: {
             bytes: 4_194_304, // ** in bytes,
-            mb: "4MB"
+            mb: "4MB",
         },
         price: {
             amount: 0,
@@ -25,7 +25,7 @@ export const PLANS = [
         pagesPerPdf: 200,
         maxDocumentSize: {
             bytes: 16_777_216, // ** in bytes
-            mb: "16MB"
+            mb: "16MB",
         },
         price: {
             amount: 7.99,
