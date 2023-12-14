@@ -7,8 +7,17 @@ import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { pineconeClient } from "@/lib/pinecone";
+import { z } from "zod";
 
-const f = createUploadthing();
+const f = createUploadthing({
+    errorFormatter: (err) => {
+        return {
+            message: err.message,
+            zodError:
+                err.cause instanceof z.ZodError ? err.cause.flatten() : null,
+        };
+    },
+});
 
 const middleware = async () => {
     const { getUser } = getKindeServerSession();
