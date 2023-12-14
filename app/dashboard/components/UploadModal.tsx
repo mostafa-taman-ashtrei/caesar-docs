@@ -105,7 +105,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button
-                    className="flex w-1/4 flex-row items-center justify-center gap-2"
+                    className="flex w-full md:w-1/3 flex-row items-center justify-center gap-2"
                     variant="secondary"
                 >
                     <UploadCloud />

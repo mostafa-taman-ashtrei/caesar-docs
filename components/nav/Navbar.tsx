@@ -1,20 +1,12 @@
-import {
-    LogoutLink,
-    RegisterLink,
-    getKindeServerSession,
-} from "@kinde-oss/kinde-auth-nextjs/server";
-
-import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 import NavLink from "./NavLink";
 import React from "react";
 import ThemeTogglerButton from "./ThemeToggle";
-import { buttonVariants } from "../ui/button";
+import UserNav from "./UserNav";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-interface NavbarProps {}
-
-const Navbar: React.FC<NavbarProps> = async () => {
+const Navbar: React.FC = async () => {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
@@ -29,28 +21,14 @@ const Navbar: React.FC<NavbarProps> = async () => {
                     <MobileNav isAuth={!!user} />
 
                     <div className="hidden items-center space-x-4 sm:flex">
-                        {!user ? (
-                            <>
-                                <NavLink title="Pricing" href="/pricing" />
-
-                                <RegisterLink
-                                    className={buttonVariants({
-                                        size: "default",
-                                    })}
-                                >
-                                    Get started{" "}
-                                    <ArrowRight className="ml-1.5 h-5 w-5" />
-                                </RegisterLink>
-                            </>
-                        ) : (
-                            <>
-                                <NavLink title="Dashboard" href="/dashboard" />
-                                <LogoutLink className="font-semibold hover:underline">
-                                    Sign out
-                                </LogoutLink>
-                            </>
-                        )}
-
+                        {!user
+                            ? <NavLink title="Pricing" href="/pricing" />
+                            : <UserNav
+                                name={!user.given_name || !user.family_name ? "Your Account" : `${user.given_name} ${user.family_name}`}
+                                email={user.email ?? ""}
+                                imageUrl={user.picture ?? ""}
+                            />
+                        }
                         <ThemeTogglerButton />
                     </div>
                 </div>

@@ -44,20 +44,11 @@ export const pricingItems = [
         quota: 10,
         features: [
             {
-                text: "5 pages per PDF",
-                footnote: "The maximum amount of pages per PDF-file.",
-            },
-            {
                 text: "4MB file size limit",
                 footnote: "The maximum file size of a single PDF file.",
             },
             {
                 text: "Mobile-friendly interface",
-            },
-            {
-                text: "Upload more thatn 10 documents / month",
-                footnote: "You can upload a maximum of 10 documents per month.",
-                negative: true,
             },
             {
                 text: "Higher-quality responses",
@@ -77,19 +68,11 @@ export const pricingItems = [
         quota: PLANS.find((p) => p.slug === "pro")!.quota,
         features: [
             {
-                text: "25 pages per PDF",
-                footnote: "The maximum amount of pages per PDF-file.",
-            },
-            {
                 text: "16MB file size limit",
                 footnote: "The maximum file size of a single PDF file.",
             },
             {
                 text: "Mobile-friendly interface",
-            },
-            {
-                text: "Upload more thatn 10 documents / month",
-                footnote: "You can upload a maximum of 50 documents per month.",
             },
             {
                 text: "Higher-quality responses",
