@@ -1,20 +1,17 @@
 import "./globals.css";
 import "simplebar-react/dist/simplebar.min.css";
 
+import { cn, constructMetadata } from "@/lib/utils";
+
 import { Inter } from "next/font/google";
-import type { Metadata } from "next";
 import Navbar from "@/components/nav/Navbar";
 import NextThemeProvider from "@/providers/NextThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import TrpcProvider from "@/providers/TrpcProvider";
-import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-    title: "Raven",
-    description: "Chat with and manage your documents using the power of A.I",
-};
+export const metadata = constructMetadata();
 
 interface RootLayoutProps {
     children: React.ReactNode;

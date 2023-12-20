@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
@@ -8,4 +9,51 @@ export const absoluteUrl = (path: string) => {
     if (process.env.VERCEL_URL)
         return `https://${process.env.VERCEL_URL}${path}`;
     return `http://localhost:${process.env.PORT ?? 3000}${path}`;
+};
+
+
+type ConstructMetadataParams = {
+    title?: string
+    description?: string
+    image?: string
+    icons?: string
+    noIndex?: boolean
+}
+
+export const constructMetadata = ({
+    title = "Raven | MVP",
+    description = "Chat with and manage your documents using the power of A.I.",
+    image = "/images/placeholder-thumbnail.jpg",
+    icons = "/favicon.ico",
+    noIndex = false
+}: ConstructMetadataParams = {}): Metadata => {
+    return {
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            images: [
+                {
+                    url: image
+                }
+            ]
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: [image],
+            creator: "@appnamehandle" // TODO: app twitter handle goes here.
+        },
+        icons,
+        metadataBase: new URL("https://production-url.com"), // TODO: production url goes here
+        themeColor: "#FFF",
+        ...(noIndex && {
+            robots: {
+                index: false,
+                follow: false
+            }
+        })
+    };
 };
