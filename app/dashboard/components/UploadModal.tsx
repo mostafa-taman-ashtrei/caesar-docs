@@ -13,6 +13,7 @@ import DropZone from "./DropZone";
 import ErrorZone from "./ErrorZone";
 import { FileRejection } from "react-dropzone";
 import { UploadCloud } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
@@ -21,9 +22,11 @@ import { useUploadThing } from "@/lib/uploadthing";
 
 interface UploadModalProps {
     subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
+    className?: string;
+    variant: "ghost" | "secondary";
 }
 
-const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
+const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, variant }) => {
     const router = useRouter();
     const { maxDocumentSize, isSubscribed } = subscriptionPlan;
 
@@ -105,11 +108,14 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan }) => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button
-                    className="flex w-full md:w-1/3 flex-row items-center justify-center gap-2"
-                    variant="secondary"
+                    className={cn(
+                        "flex w-full flex-row items-center justify-center gap-2 md:w-1/2",
+                        className
+                    )}
+                    variant={variant}
                 >
                     <UploadCloud />
-                    Upload New Document
+                    Upload A New Document
                 </Button>
             </DialogTrigger>
 

@@ -27,7 +27,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ isDisabled }) => {
                 <div className="flex w-full flex-row items-center  justify-center gap-2  p-2">
                     <Input
                         disabled={isLoading || isDisabled}
-                        placeholder="Enter your question..."
+                        placeholder="What would you like to know?"
                         onKeyDown={handleKeyDown}
                         onChange={handleInputChange}
                         value={message}

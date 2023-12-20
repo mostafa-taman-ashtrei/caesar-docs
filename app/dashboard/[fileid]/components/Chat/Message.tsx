@@ -1,4 +1,4 @@
-import { Bot, User } from "lucide-react";
+import { Bot, UserRound } from "lucide-react";
 
 import { ExtendedMessage } from "@/types/message";
 import ReactMarkdown from "react-markdown";
@@ -13,11 +13,6 @@ interface MessageProps {
 
 const Message = forwardRef<HTMLDivElement, MessageProps>(
     ({ message, isNextMessageSamePerson }, ref) => {
-        const Icons = {
-            user: User,
-            logo: Bot,
-        };
-
         return (
             <div
                 ref={ref}
@@ -36,15 +31,15 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
                     )}
                 >
                     {message.isUserMessage ? (
-                        <Icons.user className=" h-4/5 w-4/5 text-green-500" />
+                        <UserRound className=" h-7 w-7 text-green-500" />
                     ) : (
-                        <Icons.logo className=" h-4/5 w-4/5 text-blue-500" />
+                        <Bot className=" h-7 w-7 text-blue-500" />
                     )}
                 </div>
 
                 <div
                     className={cn(
-                        "mx-2 flex max-w-md flex-col space-y-2 text-base",
+                        "mx-2 flex max-w-md flex-col space-y-2 text-sm",
                         {
                             "order-1 items-end": message.isUserMessage,
                             "order-2 items-start": !message.isUserMessage,
@@ -78,14 +73,14 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
                         {message.id !== "loading-message" && (
                             <div
                                 className={cn(
-                                    "mt-2 w-full select-none text-right text-xs",
+                                    "mt-2 w-full select-none text-xs",
                                     {
-                                        "text-blue-200": !message.isUserMessage,
-                                        "text-green-200": message.isUserMessage,
+                                        "text-blue-200 text-left": !message.isUserMessage,
+                                        "text-green-200 text-right": message.isUserMessage,
                                     }
                                 )}
                             >
-                                {format(new Date(message.createdAt), "HH:mm")}
+                                {format(new Date(message.createdAt), "hh:mm a")}
                             </div>
                         )}
                     </div>

@@ -125,34 +125,33 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                     </Button>
                 </div>
 
-                <div className="space-x-2">
+                <div className="flex flex-row gap-0">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button
                                 className="gap-1.5"
                                 aria-label="zoom"
                                 variant="ghost"
+                                size="icon"
                             >
                                 <Search className="h-4 w-4" />
-                                {scale * 100}%
-                                <ChevronDown className="h-3 w-3 opacity-50" />
                             </Button>
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent>
-                            <DropdownMenuItem onSelect={() => setScale(1)}>
+                            <DropdownMenuItem onSelect={() => setScale(1)} className={cn({ "bg-zinc-400 dark:bg-zinc-800": scale === 1 })}>
                                 100%
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem onSelect={() => setScale(1.5)}>
+                            <DropdownMenuItem onSelect={() => setScale(1.5)} className={cn({ "bg-zinc-400 dark:bg-zinc-800": scale === 1.5 })}>
                                 150%
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem onSelect={() => setScale(2)}>
+                            <DropdownMenuItem onSelect={() => setScale(2)} className={cn({ "bg-zinc-400 dark:bg-zinc-800": scale === 2 })}>
                                 200%
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem onSelect={() => setScale(2.5)}>
+                            <DropdownMenuItem onSelect={() => setScale(2.5)} className={cn({ "bg-zinc-400 dark:bg-zinc-800": scale === 2.5 })}>
                                 250%
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -211,7 +210,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                             {isLoading && renderedScale && (
                                 <Page
                                     width={
-                                        typeof width === "number" ? width : 645
+                                        typeof width === "number" ? width : 545
                                     }
                                     pageNumber={currentPage}
                                     scale={scale}
@@ -222,7 +221,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
 
                             <Page
                                 className={cn(isLoading ? "hidden" : "")}
-                                width={typeof width === "number" ? width : 645}
+                                width={typeof width === "number" ? width : 545}
                                 pageNumber={currentPage}
                                 scale={scale}
                                 rotate={rotation}

@@ -24,7 +24,7 @@ const UserNav = async ({ email, imageUrl, name }: UserNavProps) => {
                 className="overflow-visible"
             >
                 <Button className="rounded-full h-10 w-10 aspect-square" variant="ghost" size="icon">
-                    <Avatar className="relative w-10 h-10">
+                    <Avatar className="relative w-7 h-7">
                         {
                             imageUrl
                                 ? <div className="relative aspect-square h-full w-full">

@@ -1,7 +1,8 @@
 import Container from "@/components/general/Container";
 import { DB } from "@/lib/prisma";
 import FileGrid from "./components/FileGrid";
-import UploadModal from "./components/UploadModal";
+import GradientText from "@/components/general/GradientText";
+import { Separator } from "@/components/ui/separator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { redirect } from "next/navigation";
@@ -20,13 +21,17 @@ const DashboardPage: React.FC = async () => {
 
     return (
         <Container>
-            <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b pb-5 sm:flex-row sm:items-center sm:gap-2">
-                <h1 className="mb-3 text-5xl font-bold">Files</h1>
+            <div className="col-span-2 w-full space-y-2 mt-4">
+                <div>
+                    <h3 className="text-2xl font-medium">
+                        <GradientText text="Files" />
+                    </h3>
+                </div>
 
-                <UploadModal subscriptionPlan={subscriptionPlan} />
+                <Separator className="bg-primary/10" />
             </div>
 
-            <FileGrid />
+            <FileGrid subscriptionPlan={subscriptionPlan} />
         </Container>
     );
 };

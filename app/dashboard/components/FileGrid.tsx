@@ -6,11 +6,17 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import FileSkeleton from "@/components/skeletons/FileSkeleton";
 import Link from "next/link";
+import UploadModal from "./UploadModal";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { trpc } from "@/app/_trpc/client";
 
-const FileGrid: React.FC = () => {
+interface FileGridProps {
+    subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
+}
+
+const FileGrid: React.FC<FileGridProps> = ({ subscriptionPlan }) => {
     const [deletingFile, setDeletingFile] = useState<string | null>(null);
 
     const utils = trpc.useUtils();
@@ -33,20 +39,29 @@ const FileGrid: React.FC = () => {
 
     if (!files || files.length === 0)
         return (
-            <div className="mt-16 flex flex-col items-center gap-0">
+            <div className="mt-16 flex flex-col items-center gap-2">
                 <Ghost className="h-14 w-14" />
                 <h3 className="text-xl font-semibold">
                     It&apos;s a ghost town in here
                 </h3>
 
                 <p className="text-sm text-gray-600">
-                    You have no files so start uploading now.
+                    You have no files ... so start uploading some now.
                 </p>
+
+                <UploadModal variant="secondary" subscriptionPlan={subscriptionPlan} />
             </div>
         );
 
+
     return (
         <ul className="mb-2 mt-8 grid grid-cols-1 gap-6 divide-y md:grid-cols-2 lg:grid-cols-3">
+            <UploadModal
+                className="h-full md:w-full"
+                variant="secondary"
+                subscriptionPlan={subscriptionPlan}
+            />
+
             {files
                 ?.sort(
                     (a, b) =>
@@ -107,7 +122,7 @@ const FileGrid: React.FC = () => {
                                 variant="ghost"
                                 className="rounded-full text-red-500 hover:text-red-600"
                                 onClick={() => deleteFile({ id: file.id })}
-                                disabled={deletingFile === file.id}
+                                disabled={deletingFile !== null}
                             >
                                 <Trash
                                     className={cn(

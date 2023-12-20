@@ -74,7 +74,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     {uploadProgress === 100 && (
                                         <div className="flex items-center justify-center gap-1 pt-2  text-center text-sm">
                                             <Loader2 className="h-3 w-3 animate-spin" />
-                                            Generating PDF page...
+                                            Generating PDF chat page...
                                         </div>
                                     )}
                                 </div>

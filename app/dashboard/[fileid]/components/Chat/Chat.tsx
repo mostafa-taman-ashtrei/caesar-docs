@@ -26,7 +26,7 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
 
     if (isLoading)
         return (
-            <div className="relative flex  min-h-full flex-col justify-between gap-2">
+            <div className="relative mt-5 flex min-h-full flex-col justify-between gap-2 md:mt-0 lg:mt-0">
                 <div className="mb-28 flex flex-1 flex-col items-center justify-center">
                     <div className="flex flex-col items-center gap-2">
                         <Loader className="h-8 w-8 animate-spin text-blue-500" />
@@ -43,14 +43,14 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
 
     if (data?.status === "PROCESSING")
         return (
-            <div className="relative flex  min-h-full flex-col justify-between gap-2">
+            <div className="relative mt-5 flex min-h-full flex-col justify-between gap-2 md:mt-0 lg:mt-0">
                 <div className="mb-28 flex flex-1 flex-col items-center justify-center">
                     <div className="flex flex-col items-center gap-2">
                         <Loader className="h-8 w-8 animate-spin text-blue-500" />
                         <h3 className="text-xl font-semibold">
                             Processing PDF ...
                         </h3>
-                        <p className="text-sm text-zinc-500">
+                        <p className="text-center text-sm text-zinc-500">
                             Raven is processing your document ... this will only
                             take a moment
                         </p>
@@ -63,13 +63,18 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
 
     if (data?.status === "FAILED")
         return (
-            <div className="relative flex min-h-full flex-col justify-between gap-2">
+            <div className="relative mt-5 flex min-h-full flex-col justify-between gap-2 md:mt-0 lg:mt-0">
                 <div className="mb-28 flex flex-1 flex-col items-center justify-center">
                     <div className="flex flex-col items-center gap-2">
                         <AlertCircle className="h-8 w-8 text-red-500" />
-                        <h3 className="text-xl font-semibold">
-                            There was an error with processing this document.
+                        <h3 className="text-center text-xl font-semibold">
+                            Failed To Process.
                         </h3>
+
+                        <p className="text-center text-sm text-zinc-500">
+                            There was an error with processing this document.
+                            Try reuploading the document.
+                        </p>
 
                         <Link
                             href="/dashboard"
@@ -79,7 +84,7 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
                             })}
                         >
                             <ChevronLeft className="mr-1.5 h-3 w-3" />
-                            Back To Dashboard
+                            Go Back To Dashboard
                         </Link>
                     </div>
                 </div>
