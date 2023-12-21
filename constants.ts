@@ -4,7 +4,7 @@ export const PLANS = [
     {
         name: "Free Forever",
         slug: "free",
-        quota: 10,
+        quota: 3,
         pagesPerPdf: 20,
         maxDocumentSize: {
             bytes: 4_194_304, // ** in bytes,
@@ -21,8 +21,8 @@ export const PLANS = [
     {
         name: "Pro",
         slug: "pro",
-        quota: 50,
-        pagesPerPdf: 200,
+        quota: 100,
+        pagesPerPdf: 100,
         maxDocumentSize: {
             bytes: 16_777_216, // ** in bytes
             mb: "16MB",
@@ -40,12 +40,20 @@ export const PLANS = [
 export const pricingItems = [
     {
         plan: "Free",
-        tagline: "Works best for individuals, studens and small side projects.",
+        tagline: "Works best for individuals, studens and small projects.",
         quota: 10,
         features: [
             {
                 text: "4MB file size limit",
                 footnote: "The maximum file size of a single PDF file.",
+            },
+            {
+                text: "Upload Quoata of 3 files",
+                footnote: "You can upload 3 files or less.",
+            },
+            {
+                text: "Files up to 20 pages",
+                footnote: "The mximum number of pages your files can have.",
             },
             {
                 text: "Mobile-friendly interface",
@@ -70,6 +78,14 @@ export const pricingItems = [
             {
                 text: "16MB file size limit",
                 footnote: "The maximum file size of a single PDF file.",
+            },
+            {
+                text: "Upload Quoata of 100 files",
+                footnote: "The maximum number of files you can upload.",
+            },
+            {
+                text: "Files up to 100 pages",
+                footnote: "The mximum number of pages your files can have.",
             },
             {
                 text: "Mobile-friendly interface",

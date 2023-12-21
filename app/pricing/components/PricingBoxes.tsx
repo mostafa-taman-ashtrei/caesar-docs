@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, HelpCircle, XCircle } from "lucide-react";
+import { CheckCircle2, HelpCircle, XCircle, Zap } from "lucide-react";
 import { PLANS, pricingItems } from "@/constants";
 import {
     Tooltip,
@@ -115,10 +115,11 @@ const PricingBoxes: React.FC = () => {
                                 </Button>
                             ) : (
                                 <Button
-                                    className="w-full"
+                                    className="w-full flex flex-row gap-2 justify-center items-center"
                                     variant="gradient"
                                     onClick={handleUpgrade}
                                 >
+                                    <Zap />
                                     Upgrade To Pro
                                 </Button>
                             )}

@@ -7,13 +7,13 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { UploadCloud, XCircle } from "lucide-react";
 import { cn, readFile } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import DropZone from "./DropZone";
 import ErrorZone from "./ErrorZone";
 import { FileRejection } from "react-dropzone";
-import { UploadCloud } from "lucide-react";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
@@ -24,9 +24,11 @@ interface UploadModalProps {
     subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
     className?: string;
     variant: "ghost" | "secondary";
+    isDisabled?: boolean;
+    userFilesLength: number;
 }
 
-const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, variant }) => {
+const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, variant, isDisabled, userFilesLength }) => {
     const router = useRouter();
     const { maxDocumentSize, isSubscribed } = subscriptionPlan;
 
@@ -81,7 +83,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, 
 
         const pdfPages = await readFile(acceptedFile[0]);
         const pdfPageLimit = subscriptionPlan.pagesPerPdf || 20;
-
+        const uploadQuota = subscriptionPlan.quota || 3;
 
         if (pdfPages === null) {
             setUploadProgress(0);
@@ -90,8 +92,12 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, 
             throw new Error("Failed to process number of pages in this pdf");
         }
 
-        if (pdfPages > pdfPageLimit) {
-            setError(`Your current plan only supports files up to ${pdfPageLimit} pages per document, upgrade to PRO to get more features`);
+        if (pdfPages > pdfPageLimit || uploadQuota >= userFilesLength) {
+            const errorMessage = pdfPages > pdfPageLimit
+                ? `Your current plan only supports files up to ${pdfPageLimit} pages per document, upgrade to PRO to get more features`
+                : `Your current plan only supports a maximum quota of ${uploadQuota}, upgrade to PRO to get more features`;
+
+            setError(errorMessage);
             setUploadProgress(0);
             setIsUploading(false);
             return;
@@ -122,6 +128,23 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, 
 
         startPolling({ key });
     };
+
+    if (isDisabled) return <Button
+        className={cn(
+            "flex w-full flex-col items-center justify-center gap-2 md:w-1/2",
+            className
+        )}
+        variant={variant}
+        disabled
+    >
+        <XCircle className="text-red-600" />
+        <p className="text-xs text-center text-wrap">
+            {`You have reached the file limit
+             on the ${subscriptionPlan.name} plan.`}
+        </p>
+
+
+    </Button>;
 
     return (
         <Dialog>

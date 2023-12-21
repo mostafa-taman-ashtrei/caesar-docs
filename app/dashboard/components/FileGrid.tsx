@@ -49,10 +49,16 @@ const FileGrid: React.FC<FileGridProps> = ({ subscriptionPlan }) => {
                     You have no files ... so start uploading some now.
                 </p>
 
-                <UploadModal variant="secondary" subscriptionPlan={subscriptionPlan} />
+                <UploadModal
+                    variant="secondary"
+                    subscriptionPlan={subscriptionPlan}
+                    userFilesLength={0}
+                />
             </div>
         );
 
+    const fileUploadLimit = subscriptionPlan.quota || 3;
+    const uploadLimit = files.length >= fileUploadLimit;
 
     return (
         <ul className="mb-2 mt-8 grid grid-cols-1 gap-6 divide-y md:grid-cols-2 lg:grid-cols-3">
@@ -60,6 +66,8 @@ const FileGrid: React.FC<FileGridProps> = ({ subscriptionPlan }) => {
                 className="h-full md:w-full"
                 variant="secondary"
                 subscriptionPlan={subscriptionPlan}
+                isDisabled={uploadLimit}
+                userFilesLength={files.length}
             />
 
             {files
