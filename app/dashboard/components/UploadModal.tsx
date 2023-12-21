@@ -7,13 +7,13 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn, readFile } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import DropZone from "./DropZone";
 import ErrorZone from "./ErrorZone";
 import { FileRejection } from "react-dropzone";
 import { UploadCloud } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
@@ -65,7 +65,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, 
     const handleError = (fileRejections: FileRejection[]) => {
         const errorMessage =
             fileRejections[0].errors[0].code === "file-too-large"
-                ? `Your current plan only supports files up to ${maxDocumentSize?.mb}.`
+                ? `Your current plan only supports files up to ${maxDocumentSize?.mb}, upgrade to PRO to get more features.`
                 : "There seems to be some abnormalities with this file.";
 
         setError(errorMessage);
@@ -77,8 +77,27 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, 
 
     const handleUpload = async (acceptedFile: File[]) => {
         setIsUploading(true);
-
         const progressInterval = startSimulatedProgress();
+
+        const pdfPages = await readFile(acceptedFile[0]);
+        const pdfPageLimit = subscriptionPlan.pagesPerPdf || 20;
+
+
+        if (pdfPages === null) {
+            setUploadProgress(0);
+            setIsUploading(false);
+            setError("Failed to process number of pages in this pdf ... please try again later.");
+            throw new Error("Failed to process number of pages in this pdf");
+        }
+
+        if (pdfPages > pdfPageLimit) {
+            setError(`Your current plan only supports files up to ${pdfPageLimit} pages per document, upgrade to PRO to get more features`);
+            setUploadProgress(0);
+            setIsUploading(false);
+            return;
+        }
+
+
         const res = await startUpload(acceptedFile);
 
         if (!res) {

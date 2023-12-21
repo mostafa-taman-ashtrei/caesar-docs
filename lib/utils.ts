@@ -48,7 +48,6 @@ export const constructMetadata = ({
         },
         icons,
         metadataBase: new URL("https://production-url.com"), // TODO: production url goes here
-        themeColor: "#FFF",
         ...(noIndex && {
             robots: {
                 index: false,
@@ -56,4 +55,22 @@ export const constructMetadata = ({
             }
         })
     };
+};
+
+
+export const readFile = (file: File) => {
+    return new Promise<number | null>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsText(file);
+
+        reader.onload = () => {
+            const fileResult = reader.result as string;
+            const pdfPages = fileResult.match(/\/Type[\s]*\/Page[^s]/g);
+            if (pdfPages === null) return reject("Failed to get page num");
+
+            return resolve(pdfPages.length);
+        };
+
+        reader.onerror = error => reject(error);
+    });
 };

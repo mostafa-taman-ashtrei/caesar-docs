@@ -1,5 +1,6 @@
+import { RotateCcw, XCircle } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { XCircle } from "lucide-react";
 
 interface ErrorZoneProps {
     error: string | null;
@@ -18,11 +19,16 @@ const ErrorZone: React.FC<ErrorZoneProps> = ({ error, setError }) => {
                         <p className="mb-2 text-sm">
                             Failed to Upload Your File.
                         </p>
-                        <p className="mb-2 text-center text-sm  text-zinc-700">
+                        <p className="mx-1 mb-2 text-center text-sm text-zinc-700">
                             {error}
                         </p>
 
-                        <Button onClick={handleClearError} variant="secondary">
+                        <Button
+                            onClick={handleClearError}
+                            variant="secondary"
+                            className="flex flex-row items-center justify-center gap-1"
+                        >
+                            <RotateCcw className="h-4 w-4" />
                             Try Another file.
                         </Button>
                     </div>

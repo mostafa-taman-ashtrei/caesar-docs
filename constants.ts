@@ -5,7 +5,7 @@ export const PLANS = [
         name: "Free Forever",
         slug: "free",
         quota: 10,
-        pagesPerPdf: 50,
+        pagesPerPdf: 20,
         maxDocumentSize: {
             bytes: 4_194_304, // ** in bytes,
             mb: "4MB",
