@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
 
-interface UploadModalProps {
+interface UploadButtonProps {
     subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
     className?: string;
     variant: "ghost" | "secondary";
@@ -28,7 +28,7 @@ interface UploadModalProps {
     userFilesLength: number;
 }
 
-const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, variant, isDisabled, userFilesLength }) => {
+const UploadButton: React.FC<UploadButtonProps> = ({ subscriptionPlan, className, variant, isDisabled, userFilesLength }) => {
     const router = useRouter();
     const { maxDocumentSize, isSubscribed } = subscriptionPlan;
 
@@ -92,7 +92,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, 
             throw new Error("Failed to process number of pages in this pdf");
         }
 
-        if (pdfPages > pdfPageLimit || uploadQuota >= userFilesLength) {
+        if (pdfPages > pdfPageLimit || userFilesLength >= uploadQuota) {
             const errorMessage = pdfPages > pdfPageLimit
                 ? `Your current plan only supports files up to ${pdfPageLimit} pages per document, upgrade to PRO to get more features`
                 : `Your current plan only supports a maximum quota of ${uploadQuota}, upgrade to PRO to get more features`;
@@ -186,4 +186,4 @@ const UploadModal: React.FC<UploadModalProps> = ({ subscriptionPlan, className, 
     );
 };
 
-export default UploadModal;
+export default UploadButton;

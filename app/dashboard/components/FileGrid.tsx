@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import FileSkeleton from "@/components/skeletons/FileSkeleton";
 import Link from "next/link";
-import UploadModal from "./UploadModal";
+import UploadButton from "./UploadButton";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
@@ -49,7 +49,7 @@ const FileGrid: React.FC<FileGridProps> = ({ subscriptionPlan }) => {
                     You have no files ... so start uploading some now.
                 </p>
 
-                <UploadModal
+                <UploadButton
                     variant="secondary"
                     subscriptionPlan={subscriptionPlan}
                     userFilesLength={0}
@@ -62,7 +62,7 @@ const FileGrid: React.FC<FileGridProps> = ({ subscriptionPlan }) => {
 
     return (
         <ul className="mb-2 mt-8 grid grid-cols-1 gap-6 divide-y md:grid-cols-2 lg:grid-cols-3">
-            <UploadModal
+            <UploadButton
                 className="h-full md:w-full"
                 variant="secondary"
                 subscriptionPlan={subscriptionPlan}
