@@ -12,7 +12,7 @@ const FeatureSection: React.FC = () => {
                         </h2>
                         <p className="mt-4 text-lg text-gray-600">
                             Chatting to your PDF files has never been easier
-                            than with Quill.
+                            than with Caesar Docs.
                         </p>
                     </div>
                 </div>
@@ -56,8 +56,8 @@ const FeatureSection: React.FC = () => {
                                 Step 3 | Start asking questions
                             </span>
                             <span className="mt-2 text-zinc-700">
-                                It&apos;s that simple. Try out Quill today - it
-                                really takes less than a minute.
+                                It&apos;s that simple. Try Caesar Docs today -
+                                it really takes less than a minute.
                             </span>
                         </div>
                     </li>

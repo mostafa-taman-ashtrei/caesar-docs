@@ -11,7 +11,7 @@ const HeroSection: React.FC = () => {
         <>
             <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 px-7 py-2  backdrop-blur transition-all hover:border-gray-300">
                 <p className="text-sm font-semibold">
-                    Raven is now online 🎉
+                    Caesar Docs is now online 🎉
                 </p>
             </div>
             <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
@@ -20,7 +20,7 @@ const HeroSection: React.FC = () => {
                 in seconds.
             </h1>
             <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-                Raven allows you to have conversations with any
+                Caesar Docs allows you to have conversations with any
                 PDF document. Simply upload your file and start
                 asking questions right away.
             </p>

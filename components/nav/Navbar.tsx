@@ -1,3 +1,4 @@
+import GradientText from "../general/GradientText";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 import NavLink from "./NavLink";
@@ -11,16 +12,16 @@ const Navbar: React.FC = async () => {
     const user = await getUser();
 
     return (
-        <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full  bg-white backdrop-blur-lg transition-all dark:bg-zinc-950">
+        <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full  bg-gray-100 backdrop-blur-lg transition-all dark:bg-zinc-900">
             <div className="px-7">
                 <div className="flex h-14 items-center justify-between">
                     <Link href={user ? "/dashboard" : "/"} className="z-40 flex font-bold">
-                        Raven
+                        <GradientText text="Caesar Docs" />
                     </Link>
 
                     <MobileNav isAuth={!!user} />
 
-                    <div className="hidden items-center space-x-4 sm:flex">
+                    <div className="hidden items-center sm:flex">
                         {!user
                             ? <NavLink title="Pricing" href="/pricing" />
                             : <UserNav

@@ -32,7 +32,7 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
                         <Loader className="h-8 w-8 animate-spin text-blue-500" />
                         <h3 className="text-xl font-semibold">Loading ...</h3>
                         <p className="text-sm text-zinc-500">
-                            Raven is preparing your document ...
+                            Caesar Docs is preparing your document ...
                         </p>
                     </div>
                 </div>
@@ -51,7 +51,8 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
                             Processing PDF ...
                         </h3>
                         <p className="text-center text-sm text-zinc-500">
-                            Raven is processing your document ... this will only
+                            Caesar Docs is preparing your document ...
+                            is processing your document ... this will only
                             take a moment
                         </p>
                     </div>

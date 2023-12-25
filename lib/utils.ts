@@ -21,9 +21,9 @@ type ConstructMetadataParams = {
 }
 
 export const constructMetadata = ({
-    title = "Raven | MVP",
+    title = "Caesar Docs",
     description = "Chat with and manage your documents using the power of A.I.",
-    image = "/images/placeholder-thumbnail.jpg",
+    image = "/images/thumbnail.jpg",
     icons = "/favicon.ico",
     noIndex = false
 }: ConstructMetadataParams = {}): Metadata => {

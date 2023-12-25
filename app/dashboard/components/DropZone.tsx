@@ -31,7 +31,7 @@ const DropZone: React.FC<DropZoneProps> = ({
             {({ getRootProps, getInputProps, acceptedFiles }) => (
                 <div
                     {...getRootProps()}
-                    className="m-4 h-72 rounded-lg border  border-dashed border-gray-300"
+                    className="m-4 h-72 rounded-lg border-2  border-dashed border-gray-300"
                 >
                     <div className="flex h-full w-full items-center justify-center">
                         <label

@@ -1,7 +1,6 @@
 import Container from "@/components/general/Container";
 import { DB } from "@/lib/prisma";
 import FileGrid from "./components/FileGrid";
-import GradientText from "@/components/general/GradientText";
 import { Separator } from "@/components/ui/separator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
@@ -24,7 +23,7 @@ const DashboardPage: React.FC = async () => {
             <div className="col-span-2 w-full space-y-2 mt-4">
                 <div>
                     <h3 className="text-2xl font-medium">
-                        <GradientText text="Files" />
+                        Files
                     </h3>
                 </div>
 
