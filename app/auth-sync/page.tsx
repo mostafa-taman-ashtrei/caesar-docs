@@ -5,13 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { trpc } from "../_trpc/client";
 
-const AuthCallBackPage: React.FC = () => {
+const AuthSyncPage: React.FC = () => {
     const router = useRouter();
 
     const searchParams = useSearchParams();
     const origin = searchParams.get("origin");
 
-    trpc.authCallback.useQuery(undefined, {
+    trpc.authSync.useQuery(undefined, {
         onSuccess: ({ success }) => {
             if (success) router.push(origin ? `/${origin}` : "/dashboard");
         },
@@ -35,4 +35,4 @@ const AuthCallBackPage: React.FC = () => {
     );
 };
 
-export default AuthCallBackPage;
+export default AuthSyncPage;

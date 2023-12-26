@@ -10,11 +10,11 @@ const DashboardPage: React.FC = async () => {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    if (!user || !user.id) redirect("/auth-callback?origin=dashboard");
+    if (!user || !user.id) redirect("/auth-sync?origin=dashboard");
 
     const syncedUser = await DB.user.findFirst({ where: { id: user.id } });
 
-    if (!syncedUser) redirect("/auth-callback?origin=dashboard");
+    if (!syncedUser) redirect("/auth-sync?origin=dashboard");
 
     const subscriptionPlan = await getUserSubscriptionPlan();
 
@@ -23,7 +23,7 @@ const DashboardPage: React.FC = async () => {
             <div className="col-span-2 w-full space-y-2 mt-4">
                 <div>
                     <h3 className="text-2xl font-medium">
-                        Files
+                        File Gallery
                     </h3>
                 </div>
 

@@ -5,5 +5,5 @@ export default function middleware(req: unknown) {
 }
 
 export const config = {
-    matcher: ["/dashboard/:path*", "/auth-callback"],
+    matcher: ["/dashboard/:path*", "/auth-sync"],
 };
