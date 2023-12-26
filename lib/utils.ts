@@ -21,8 +21,8 @@ type ConstructMetadataParams = {
 
 export const constructMetadata = ({
     title = "Caesar Docs",
-    description = "Chat with and manage your documents using the power of A.I.",
-    image = "/images/thumbnail.jpg",
+    description = "Power up your learning experience by chatting with your notes, research paper or any document using the power of A.I.",
+    image = "/images/thumbnail.png",
     icons = "/favicon.ico",
     noIndex = false,
 }: ConstructMetadataParams = {}): Metadata => {
@@ -46,7 +46,7 @@ export const constructMetadata = ({
             creator: "@appnamehandle", // TODO: app twitter handle goes here.
         },
         icons,
-        metadataBase: new URL("https://production-url.com"), // TODO: production url goes here
+        metadataBase: new URL("https://caesardocs.vercel.app/"),
         ...(noIndex && {
             robots: {
                 index: false,
