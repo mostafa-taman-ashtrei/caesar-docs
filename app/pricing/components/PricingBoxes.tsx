@@ -1,5 +1,6 @@
 "use client";
 
+import { Button, buttonVariants } from "@/components/ui/button";
 import { CheckCircle2, HelpCircle, XCircle, Zap } from "lucide-react";
 import { PLANS, pricingItems } from "@/constants";
 import {
@@ -9,8 +10,8 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { Button } from "@/components/ui/button";
 import GradientText from "@/components/general/GradientText";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/app/_trpc/client";
 
@@ -110,9 +111,15 @@ const PricingBoxes: React.FC = () => {
 
                         <div className="p-5">
                             {plan === "Free" ? (
-                                <Button className="w-full" variant="secondary">
+                                <LoginLink
+                                    className={buttonVariants({
+                                        size: "default",
+                                        variant: "secondary",
+                                        className: "w-full font-bold",
+                                    })}
+                                >
                                     Get Started For Free
-                                </Button>
+                                </LoginLink>
                             ) : (
                                 <Button
                                     className="flex w-full flex-row items-center justify-center gap-2"

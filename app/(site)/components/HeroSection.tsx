@@ -3,7 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import GradientImage from "@/components/general/GradientImage";
 import GradientText from "@/components/general/GradientText";
-import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
+import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs";
 import { buttonVariants } from "@/components/ui/button";
 
 const HeroSection: React.FC = () => {
@@ -23,7 +23,7 @@ const HeroSection: React.FC = () => {
                 right away.
             </p>
 
-            <LoginLink
+            <RegisterLink
                 className={buttonVariants({
                     size: "default",
                     variant: "gradient",
@@ -31,7 +31,7 @@ const HeroSection: React.FC = () => {
                 })}
             >
                 Get started <ArrowRight className="ml-1.5 h-5 w-5" />
-            </LoginLink>
+            </RegisterLink>
 
             <div className="relative isolate">
                 <GradientImage imageUrl="/images/chat-page-screenshot.jpg" />
