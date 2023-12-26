@@ -68,7 +68,9 @@ const UploadButton: React.FC<UploadButtonProps> = ({ subscriptionPlan, className
         const errorMessage =
             fileRejections[0].errors[0].code === "file-too-large"
                 ? `Your current plan only supports files up to ${maxDocumentSize?.mb}, upgrade to PRO to get more features.`
-                : "There seems to be some abnormalities with this file.";
+                : fileRejections[0].errors[0].code === "file-invalid-type"
+                    ? "As of right now Caesar Docs only accepts pdf files."
+                    : "There seems to be some abnormalities with this file.";
 
         setError(errorMessage);
         setUploadProgress(0);

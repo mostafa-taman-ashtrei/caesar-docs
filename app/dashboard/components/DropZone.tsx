@@ -27,6 +27,7 @@ const DropZone: React.FC<DropZoneProps> = ({
             maxSize={maxDocumentSize}
             onDropRejected={(rejections) => handleError(rejections)}
             onDropAccepted={(acceptedFiles) => handleUpload(acceptedFiles)}
+            accept={{ "application/pdf": [".pdf"] }}
         >
             {({ getRootProps, getInputProps, acceptedFiles }) => (
                 <div

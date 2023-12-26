@@ -18,8 +18,7 @@ const FilePage: React.FC<FilePageProps> = async ({ params }) => {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    if (!user || !user.id)
-        redirect(`/auth-callback?origin=dashboard/${fileid}`);
+    if (!user || !user.id) redirect(`/auth-sync?origin=dashboard/${fileid}`);
 
     const file = await DB.file.findFirst({
         where: { id: fileid, userId: user.id },
@@ -36,7 +35,7 @@ const FilePage: React.FC<FilePageProps> = async ({ params }) => {
                     </div>
                 </div>
 
-                <div className="flex-1 shrink-0 border-dashed border-t border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
+                <div className="flex-1 shrink-0 border-t border-dashed border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
                     <Chat fileId={file.id} />
                 </div>
             </div>
