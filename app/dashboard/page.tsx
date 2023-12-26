@@ -20,11 +20,9 @@ const DashboardPage: React.FC = async () => {
 
     return (
         <Container>
-            <div className="col-span-2 w-full space-y-2 mt-4">
+            <div className="col-span-2 mt-4 w-full space-y-2">
                 <div>
-                    <h3 className="text-2xl font-medium">
-                        File Gallery
-                    </h3>
+                    <h3 className="text-2xl font-medium">File Gallery</h3>
                 </div>
 
                 <Separator className="bg-primary/10" />

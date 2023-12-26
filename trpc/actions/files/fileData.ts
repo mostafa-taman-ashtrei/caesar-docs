@@ -18,7 +18,6 @@ export const getFile = privateProcedure
         return file;
     });
 
-
 export const deleteFile = privateProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -39,7 +38,6 @@ export const deleteFile = privateProcedure
         return file;
     });
 
-
 export const getFileUploadStatus = privateProcedure
     .input(z.object({ fileId: z.string() }))
     .query(async ({ input, ctx }) => {
@@ -53,7 +51,6 @@ export const getFileUploadStatus = privateProcedure
         if (!file) return { status: "PENDING" as const };
         return { status: file.uploadStatus };
     });
-
 
 export const getFileMessages = privateProcedure
     .input(

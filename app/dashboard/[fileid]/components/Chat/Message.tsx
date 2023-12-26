@@ -75,8 +75,10 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
                                 className={cn(
                                     "mt-2 w-full select-none text-xs",
                                     {
-                                        "text-blue-200 text-left": !message.isUserMessage,
-                                        "text-green-200 text-right": message.isUserMessage,
+                                        "text-left text-blue-200":
+                                            !message.isUserMessage,
+                                        "text-right text-green-200":
+                                            message.isUserMessage,
                                     }
                                 )}
                             >

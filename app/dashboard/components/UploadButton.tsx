@@ -28,7 +28,13 @@ interface UploadButtonProps {
     userFilesLength: number;
 }
 
-const UploadButton: React.FC<UploadButtonProps> = ({ subscriptionPlan, className, variant, isDisabled, userFilesLength }) => {
+const UploadButton: React.FC<UploadButtonProps> = ({
+    subscriptionPlan,
+    className,
+    variant,
+    isDisabled,
+    userFilesLength,
+}) => {
     const router = useRouter();
     const { maxDocumentSize, isSubscribed } = subscriptionPlan;
 
@@ -69,8 +75,8 @@ const UploadButton: React.FC<UploadButtonProps> = ({ subscriptionPlan, className
             fileRejections[0].errors[0].code === "file-too-large"
                 ? `Your current plan only supports files up to ${maxDocumentSize?.mb}, upgrade to PRO to get more features.`
                 : fileRejections[0].errors[0].code === "file-invalid-type"
-                    ? "As of right now Caesar Docs only accepts pdf files."
-                    : "There seems to be some abnormalities with this file.";
+                  ? "As of right now Caesar Docs only accepts pdf files."
+                  : "There seems to be some abnormalities with this file.";
 
         setError(errorMessage);
         setUploadProgress(0);
@@ -90,21 +96,23 @@ const UploadButton: React.FC<UploadButtonProps> = ({ subscriptionPlan, className
         if (pdfPages === null) {
             setUploadProgress(0);
             setIsUploading(false);
-            setError("Failed to process number of pages in this pdf ... please try again later.");
+            setError(
+                "Failed to process number of pages in this pdf ... please try again later."
+            );
             throw new Error("Failed to process number of pages in this pdf");
         }
 
         if (pdfPages > pdfPageLimit || userFilesLength >= uploadQuota) {
-            const errorMessage = pdfPages > pdfPageLimit
-                ? `Your current plan only supports files up to ${pdfPageLimit} pages per document, upgrade to PRO to get more features`
-                : `Your current plan only supports a maximum quota of ${uploadQuota}, upgrade to PRO to get more features`;
+            const errorMessage =
+                pdfPages > pdfPageLimit
+                    ? `Your current plan only supports files up to ${pdfPageLimit} pages per document, upgrade to PRO to get more features`
+                    : `Your current plan only supports a maximum quota of ${uploadQuota}, upgrade to PRO to get more features`;
 
             setError(errorMessage);
             setUploadProgress(0);
             setIsUploading(false);
             return;
         }
-
 
         const res = await startUpload(acceptedFile);
 
@@ -131,22 +139,23 @@ const UploadButton: React.FC<UploadButtonProps> = ({ subscriptionPlan, className
         startPolling({ key });
     };
 
-    if (isDisabled) return <Button
-        className={cn(
-            "flex w-full flex-col items-center justify-center gap-2 md:w-1/2",
-            className
-        )}
-        variant={variant}
-        disabled
-    >
-        <XCircle className="text-red-600" />
-        <p className="text-xs text-center text-wrap">
-            {`You have reached the file limit
+    if (isDisabled)
+        return (
+            <Button
+                className={cn(
+                    "flex w-full flex-col items-center justify-center gap-2 md:w-1/2",
+                    className
+                )}
+                variant={variant}
+                disabled
+            >
+                <XCircle className="text-red-600" />
+                <p className="text-wrap text-center text-xs">
+                    {`You have reached the file limit
              on the ${subscriptionPlan.name} plan.`}
-        </p>
-
-
-    </Button>;
+                </p>
+            </Button>
+        );
 
     return (
         <Dialog>

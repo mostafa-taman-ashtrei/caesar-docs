@@ -115,7 +115,7 @@ const PricingBoxes: React.FC = () => {
                                 </Button>
                             ) : (
                                 <Button
-                                    className="w-full flex flex-row gap-2 justify-center items-center"
+                                    className="flex w-full flex-row items-center justify-center gap-2"
                                     variant="gradient"
                                     onClick={handleUpgrade}
                                 >

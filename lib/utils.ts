@@ -11,21 +11,20 @@ export const absoluteUrl = (path: string) => {
     return `http://localhost:${process.env.PORT ?? 3000}${path}`;
 };
 
-
 type ConstructMetadataParams = {
-    title?: string
-    description?: string
-    image?: string
-    icons?: string
-    noIndex?: boolean
-}
+    title?: string;
+    description?: string;
+    image?: string;
+    icons?: string;
+    noIndex?: boolean;
+};
 
 export const constructMetadata = ({
     title = "Caesar Docs",
     description = "Chat with and manage your documents using the power of A.I.",
     image = "/images/thumbnail.jpg",
     icons = "/favicon.ico",
-    noIndex = false
+    noIndex = false,
 }: ConstructMetadataParams = {}): Metadata => {
     return {
         title,
@@ -35,28 +34,27 @@ export const constructMetadata = ({
             description,
             images: [
                 {
-                    url: image
-                }
-            ]
+                    url: image,
+                },
+            ],
         },
         twitter: {
             card: "summary_large_image",
             title,
             description,
             images: [image],
-            creator: "@appnamehandle" // TODO: app twitter handle goes here.
+            creator: "@appnamehandle", // TODO: app twitter handle goes here.
         },
         icons,
         metadataBase: new URL("https://production-url.com"), // TODO: production url goes here
         ...(noIndex && {
             robots: {
                 index: false,
-                follow: false
-            }
-        })
+                follow: false,
+            },
+        }),
     };
 };
-
 
 export const readFile = (file: File) => {
     return new Promise<number | null>((resolve, reject) => {
@@ -71,6 +69,6 @@ export const readFile = (file: File) => {
             return resolve(pdfPages.length);
         };
 
-        reader.onerror = error => reject(error);
+        reader.onerror = (error) => reject(error);
     });
 };

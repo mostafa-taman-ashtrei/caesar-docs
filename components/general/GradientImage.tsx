@@ -15,7 +15,7 @@ const GradientImage: React.FC<GradientImageProps> = ({ imageUrl }) => {
                         width={1364}
                         height={1866}
                         quality={100}
-                        className="rounded-md bg-gradient-to-r gradient-primary p-2 sm:p-8 md:p-10 ring-1 ring-gray-900/10"
+                        className="gradient-primary rounded-md bg-gradient-to-r p-2 ring-1 ring-gray-900/10 sm:p-8 md:p-10"
                     />
                 </div>
             </div>

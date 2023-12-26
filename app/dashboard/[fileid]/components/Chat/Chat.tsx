@@ -51,9 +51,9 @@ const Chat: React.FC<ChatProps> = ({ fileId }) => {
                             Processing PDF ...
                         </h3>
                         <p className="text-center text-sm text-zinc-500">
-                            Caesar Docs is preparing your document ...
-                            is processing your document ... this will only
-                            take a moment
+                            Caesar Docs is preparing your document ... is
+                            processing your document ... this will only take a
+                            moment
                         </p>
                     </div>
                 </div>

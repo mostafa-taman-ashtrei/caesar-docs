@@ -15,25 +15,22 @@ const HeroSection: React.FC = () => {
                 </p>
             </div>
             <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-                Chat with your{" "}
-                <GradientText text="documents" />{" "}
-                in seconds.
+                Chat with your <GradientText text="documents" /> in seconds.
             </h1>
             <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-                Caesar Docs allows you to have conversations with any
-                PDF document. Simply upload your file and start
-                asking questions right away.
+                Caesar Docs allows you to have conversations with any PDF
+                document. Simply upload your file and start asking questions
+                right away.
             </p>
 
             <LoginLink
                 className={buttonVariants({
                     size: "default",
                     variant: "gradient",
-                    className: "mt-5 font-bold w-1/2"
+                    className: "mt-5 w-1/2 font-bold",
                 })}
             >
-                Get started{" "}
-                <ArrowRight className="ml-1.5 h-5 w-5" />
+                Get started <ArrowRight className="ml-1.5 h-5 w-5" />
             </LoginLink>
 
             <div className="relative isolate">

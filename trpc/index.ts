@@ -1,4 +1,9 @@
-import { deleteFile, getFile, getFileMessages, getFileUploadStatus } from "./actions/files/fileData";
+import {
+    deleteFile,
+    getFile,
+    getFileMessages,
+    getFileUploadStatus,
+} from "./actions/files/fileData";
 
 import authSync from "./actions/auth/authSync";
 import createStripeSession from "./actions/stripe/createStripeSession";
@@ -12,7 +17,7 @@ export const appRouter = router({
     deleteFile,
     getFileUploadStatus,
     getFileMessages,
-    createStripeSession
+    createStripeSession,
 });
 
 // export type definition of API

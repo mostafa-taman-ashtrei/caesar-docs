@@ -35,8 +35,8 @@ const createStripeSession = privateProcedure.mutation(async ({ ctx }) => {
         billing_address_collection: "auto",
         line_items: [
             {
-                price: PLANS.find((plan) => plan.name === "Pro")?.price
-                    .priceIds.test,
+                price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds
+                    .test,
                 quantity: 1,
             },
         ],

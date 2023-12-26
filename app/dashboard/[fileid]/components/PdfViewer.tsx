@@ -139,19 +139,41 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent>
-                            <DropdownMenuItem onSelect={() => setScale(1)} className={cn({ "bg-zinc-400 dark:bg-zinc-800": scale === 1 })}>
+                            <DropdownMenuItem
+                                onSelect={() => setScale(1)}
+                                className={cn({
+                                    "bg-zinc-400 dark:bg-zinc-800": scale === 1,
+                                })}
+                            >
                                 100%
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem onSelect={() => setScale(1.5)} className={cn({ "bg-zinc-400 dark:bg-zinc-800": scale === 1.5 })}>
+                            <DropdownMenuItem
+                                onSelect={() => setScale(1.5)}
+                                className={cn({
+                                    "bg-zinc-400 dark:bg-zinc-800":
+                                        scale === 1.5,
+                                })}
+                            >
                                 150%
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem onSelect={() => setScale(2)} className={cn({ "bg-zinc-400 dark:bg-zinc-800": scale === 2 })}>
+                            <DropdownMenuItem
+                                onSelect={() => setScale(2)}
+                                className={cn({
+                                    "bg-zinc-400 dark:bg-zinc-800": scale === 2,
+                                })}
+                            >
                                 200%
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem onSelect={() => setScale(2.5)} className={cn({ "bg-zinc-400 dark:bg-zinc-800": scale === 2.5 })}>
+                            <DropdownMenuItem
+                                onSelect={() => setScale(2.5)}
+                                className={cn({
+                                    "bg-zinc-400 dark:bg-zinc-800":
+                                        scale === 2.5,
+                                })}
+                            >
                                 250%
                             </DropdownMenuItem>
                         </DropdownMenuContent>
