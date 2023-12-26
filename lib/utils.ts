@@ -22,7 +22,7 @@ type ConstructMetadataParams = {
 export const constructMetadata = ({
     title = "Caesar Docs",
     description = "Power up your learning experience by chatting with your notes, research paper or any document using the power of A.I.",
-    image = "/images/thumbnail.png",
+    image = "/images/link-thumbnail.png",
     icons = "/favicon.ico",
     noIndex = false,
 }: ConstructMetadataParams = {}): Metadata => {
