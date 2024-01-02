@@ -3,8 +3,8 @@
 import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import { Menu, XIcon } from "lucide-react";
 
+import HoverLink from "../general/HoverLink";
 import NavLink from "./NavLink";
-import { Separator } from "../ui/separator";
 import ThemeTogglerButton from "./ThemeToggle";
 import { useState } from "react";
 
@@ -42,11 +42,12 @@ const MobileNav: React.FC<MobileNavProps> = ({ isAuth }) => {
                                     className="flex w-full items-center font-semibold"
                                 />
 
-                                <Separator />
 
-                                <LogoutLink className="flex w-full items-center font-semibold">
-                                    Sign out
-                                </LogoutLink>
+                                <HoverLink>
+                                    <LogoutLink className="flex w-full items-center font-semibold">
+                                        Sign out
+                                    </LogoutLink>
+                                </HoverLink>
                             </>
                         ) : (
                             <>
@@ -56,19 +57,21 @@ const MobileNav: React.FC<MobileNavProps> = ({ isAuth }) => {
                                     className="flex w-full items-center font-semibold"
                                 />
 
-                                <Separator />
+                                <HoverLink>
+                                    <LoginLink className="flex w-full items-center font-semibold">
+                                        Sign In
+                                    </LoginLink>
+                                </HoverLink>
 
-                                <LoginLink className="flex w-full items-center font-semibold">
-                                    Sign In
-                                </LoginLink>
                             </>
                         )}
 
-                        <Separator />
+                        <HoverLink>
+                            <div className="flex flex-row items-center justify-start gap-2 font-semibold cursor-pointer">
+                                Theme <ThemeTogglerButton />
+                            </div>
+                        </HoverLink>
 
-                        <div className="flex flex-row items-center justify-start gap-2 font-semibold">
-                            Theme <ThemeTogglerButton />
-                        </div>
                     </div>
                 </div>
             )}

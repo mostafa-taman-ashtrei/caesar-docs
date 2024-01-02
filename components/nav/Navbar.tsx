@@ -19,7 +19,7 @@ const Navbar: React.FC = async () => {
                         href={user ? "/dashboard" : "/"}
                         className="z-40 flex font-bold"
                     >
-                        <GradientText text="Caesar Docs" />
+                        <GradientText text="CD" />
                     </Link>
 
                     <MobileNav isAuth={!!user} />
